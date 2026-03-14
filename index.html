@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gardin — Where Beauty Grows</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1C2B1E; --sage: #4A6741; --sage-light: #7A9B6E;
+      --cream: #F5F0E8; --warm-white: #FDFAF5; --gold: #C9A96E;
+      --text-dark: #1a1a1a; --text-mid: #4a4a4a; --text-light: #8a8a8a;
+      --red: #c0392b; --orange: #d35400; --safe: #2d6a4f;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--warm-white); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; background: #1f3d2b; backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: #ffffff; letter-spacing: 0.08em; text-transform: lowercase; }
+    .logo span { color: #dbc078; }
+    nav ul { list-style: none; display: flex; gap: 32px; align-items: center; }
+    nav ul li a { text-decoration: none; font-size: 12px; color: rgba(255,255,255,0.75); letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    nav ul li a:hover { color: #dbc078; }
+    .nav-cta { background: #dbc078; color: #1f3d2b !important; padding: 9px 22px; border-radius: 2px; font-size: 11px !important; }
+    .nav-cta:hover { background: #f0d090 !important; color: #1f3d2b !important; }
+
+    /* LANG TOGGLE */
+    .lang-toggle { display: flex; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 3px; overflow: hidden; }
+    .lang-btn { padding: 6px 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.5); transition: all 0.2s; }
+    .lang-btn.active { background: var(--green); color: white; }
+    .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.1); color: #ffffff; }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 76px; }
+    .hero-left { background: var(--green); padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+    .hero-left::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(122,155,110,0.15) 0%, transparent 70%); }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 24px; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 5vw, 68px); font-weight: 300; line-height: 1.1; color: white; margin-bottom: 28px; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-desc { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.65); max-width: 420px; margin-bottom: 44px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: var(--green); padding: 13px 30px; border: none; border-radius: 2px; font-size: 13px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { background: white; }
+    .btn-outline { background: transparent; color: rgba(255,255,255,0.8); padding: 13px 30px; border: 1px solid rgba(255,255,255,0.25); border-radius: 2px; font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.6); color: white; }
+    .hero-right { background: var(--cream); padding: 80px 48px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+    .hero-stat-card { background: white; border-radius: 4px; padding: 22px 26px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; gap: 18px; transition: transform 0.2s; }
+    .hero-stat-card:hover { transform: translateX(6px); }
+    .stat-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .stat-icon.green { background: rgba(28,43,30,0.08); }
+    .stat-icon.gold { background: rgba(201,169,110,0.12); }
+    .stat-icon.sage { background: rgba(74,103,65,0.1); }
+    .stat-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--green); }
+    .stat-info p { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+    /* SECTIONS */
+    .section { padding: 100px 80px; }
+    .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); margin-bottom: 16px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.15; color: var(--green); margin-bottom: 18px; }
+    .section-title em { font-style: italic; color: var(--sage); }
+    .section-sub { font-size: 15px; color: var(--text-mid); line-height: 1.8; max-width: 560px; margin-bottom: 56px; }
+
+    /* MEMBERS */
+    .members-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+    .member-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 26px 18px; text-align: center; transition: all 0.25s; cursor: pointer; }
+    .member-card:hover { border-color: var(--sage); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(28,43,30,0.1); }
+    .member-card .emoji { font-size: 30px; margin-bottom: 10px; }
+    .member-card h4 { font-size: 13px; font-weight: 500; color: var(--green); margin-bottom: 5px; }
+    .member-card p { font-size: 11px; color: var(--text-light); line-height: 1.5; }
+
+    /* FEATURES */
+    .features-section { background: var(--green); padding: 100px 80px; color: white; }
+    .features-section .section-label { color: var(--sage-light); }
+    .features-section .section-title { color: white; }
+    .features-section .section-sub { color: rgba(255,255,255,0.6); }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
+    .feature-block { background: rgba(255,255,255,0.04); padding: 36px 32px; border: 1px solid rgba(255,255,255,0.06); transition: background 0.2s; }
+    .feature-block:hover { background: rgba(255,255,255,0.08); }
+    .feature-number { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: var(--gold); opacity: 0.4; margin-bottom: 14px; }
+    .feature-block h3 { font-size: 15px; font-weight: 500; color: white; margin-bottom: 10px; }
+    .feature-block p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+    /* MARKETPLACE */
+    .marketplace-section { padding: 100px 80px; background: var(--cream); }
+    .listings-preview { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-top: 44px; }
+    .listing-card { background: white; border-radius: 6px; overflow: hidden; border: 1px solid rgba(0,0,0,0.07); transition: all 0.25s; }
+    .listing-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .listing-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+    .listing-img.green-bg { background: linear-gradient(135deg, #1C2B1E, #2d4a2f); }
+    .listing-img.sage-bg { background: linear-gradient(135deg, #4A6741, #7A9B6E); }
+    .listing-img.gold-bg { background: linear-gradient(135deg, #C9A96E, #e8c98e); }
+    .listing-img.cream-bg { background: linear-gradient(135deg, #F5F0E8, #e8e0d0); }
+    .listing-body { padding: 18px; }
+    .listing-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; margin-bottom: 8px; }
+    .badge-b2b { background: rgba(28,43,30,0.1); color: var(--green); }
+    .badge-b2c { background: rgba(201,169,110,0.2); color: #8a6a30; }
+    .badge-both { background: rgba(74,103,65,0.1); color: var(--sage); }
+    .listing-body h4 { font-size: 14px; font-weight: 500; color: var(--green); margin-bottom: 5px; }
+    .listing-body p { font-size: 12px; color: var(--text-light); margin-bottom: 12px; line-height: 1.5; }
+    .listing-footer { display: flex; justify-content: space-between; align-items: center; }
+    .listing-price { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 500; color: var(--green); }
+    .listing-action { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); font-weight: 500; cursor: pointer; }
+
+    /* COMMUNITY */
+    .community-section { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .community-posts { display: flex; flex-direction: column; gap: 14px; }
+    .post-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 18px 22px; transition: all 0.2s; }
+    .post-card:hover { border-color: var(--sage-light); }
+    .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .post-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; background: var(--cream); }
+    .post-author { font-size: 13px; font-weight: 500; color: var(--green); }
+    .post-role { font-size: 11px; color: var(--text-light); }
+    .post-card h4 { font-size: 13px; font-weight: 500; color: var(--text-dark); margin-bottom: 5px; }
+    .post-card p { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+    .post-stats { display: flex; gap: 14px; margin-top: 10px; }
+    .post-stats span { font-size: 11px; color: var(--text-light); }
+
+    /* ═══ INGREDIENT CHECKER ═══ */
+    .checker-section { padding: 100px 80px; background: var(--warm-white); }
+    .checker-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .skin-filter-label { font-size: 12px; font-weight: 500; color: var(--text-mid); letter-spacing: 0.05em; text-transform: uppercase; margin-right: 4px; }
+    .skin-btn { padding: 7px 16px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.12); background: white; font-size: 12px; font-weight: 500; color: var(--text-mid); cursor: pointer; transition: all 0.2s; }
+    .skin-btn:hover { border-color: var(--sage); color: var(--sage); }
+    .skin-btn.active { background: var(--green); color: white; border-color: var(--green); }
+    .checker-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: flex-start; }
+    .checker-input-side { display: flex; flex-direction: column; gap: 14px; }
+    .checker-textarea { width: 100%; height: 210px; padding: 18px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-dark); background: white; resize: vertical; transition: border-color 0.2s; line-height: 1.7; }
+    .checker-textarea:focus { outline: none; border-color: var(--sage); }
+    .checker-textarea::placeholder { color: var(--text-light); }
+    .checker-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .checker-btn { background: var(--green); color: white; border: none; padding: 13px 28px; border-radius: 2px; font-size: 13px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .checker-btn:hover { background: var(--sage); }
+    .checker-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .clear-btn { background: transparent; color: var(--text-light); border: 1.5px solid rgba(0,0,0,0.1); padding: 13px 18px; border-radius: 2px; font-size: 12px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; text-transform: uppercase; }
+    .clear-btn:hover { border-color: var(--red); color: var(--red); }
+    .checker-summary { display: none; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+    .checker-summary.visible { display: flex; }
+    .summary-pill { display: flex; align-items: center; gap: 5px; padding: 6px 13px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+    .pill-safe { background: rgba(45,106,79,0.1); color: var(--safe); }
+    .pill-caution { background: rgba(211,84,0,0.1); color: var(--orange); }
+    .pill-flag { background: rgba(192,57,43,0.1); color: var(--red); }
+    .pill-vegan { background: rgba(74,103,65,0.1); color: var(--sage); }
+    .pill-non-vegan { background: rgba(139,90,43,0.12); color: #7a5c2e; }
+    .overall-score { display: none; align-items: center; gap: 14px; background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 4px; padding: 14px 18px; margin-top: 4px; }
+    .overall-score.visible { display: flex; }
+    .score-bar-wrap { flex: 1; height: 5px; background: rgba(0,0,0,0.07); border-radius: 3px; overflow: hidden; }
+    .score-bar { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+    .score-label { font-size: 12px; font-weight: 500; color: var(--green); white-space: nowrap; }
+    .score-grade { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; }
+    .checker-results-side { display: flex; flex-direction: column; gap: 8px; max-height: 540px; overflow-y: auto; padding-right: 4px; }
+    .checker-results-side::-webkit-scrollbar { width: 4px; }
+    .checker-results-side::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+    .checker-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 280px; border: 1.5px dashed rgba(0,0,0,0.1); border-radius: 4px; color: var(--text-light); font-size: 13px; gap: 10px; text-align: center; padding: 24px; }
+    .checker-placeholder span { font-size: 34px; }
+    .results-filter { display: none; gap: 7px; margin-bottom: 6px; flex-wrap: wrap; }
+    .results-filter.visible { display: flex; }
+    .rf-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); background: white; font-size: 11px; color: var(--text-mid); cursor: pointer; transition: all 0.15s; }
+    .rf-btn:hover { border-color: var(--sage); color: var(--sage); }
+    .rf-btn.active { background: var(--green); color: white; border-color: var(--green); }
+    .ingredient-row { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 14px 18px; display: flex; flex-direction: column; gap: 5px; transition: all 0.2s; animation: fadeIn 0.3s ease forwards; opacity: 0; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .ingredient-row.flag { border-left: 3px solid var(--red); }
+    .ingredient-row.caution { border-left: 3px solid var(--orange); }
+    .ingredient-row.safe { border-left: 3px solid var(--safe); }
+    .ingredient-row.unknown { border-left: 3px solid #ccc; }
+    .ingredient-row.hidden { display: none; }
+    .ing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .ing-name { font-size: 13px; font-weight: 500; color: var(--green); }
+    .ing-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    .ing-badge { font-size: 10px; padding: 3px 7px; border-radius: 2px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+    .b-safe { background: rgba(45,106,79,0.1); color: var(--safe); }
+    .b-caution { background: rgba(211,84,0,0.1); color: var(--orange); }
+    .b-flag { background: rgba(192,57,43,0.1); color: var(--red); }
+    .b-vegan { background: rgba(74,103,65,0.1); color: var(--sage); }
+    .b-not-vegan { background: rgba(139,90,43,0.1); color: #7a5c2e; }
+    .b-unknown { background: rgba(0,0,0,0.05); color: var(--text-light); }
+    .b-skin { background: rgba(201,169,110,0.15); color: #8a6a30; }
+    .b-avoid { background: rgba(192,57,43,0.08); color: var(--red); font-weight: 700; }
+    .ing-function { font-size: 11px; color: var(--text-light); font-style: italic; }
+    .ing-desc { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+    .skin-note { font-size: 11px; padding: 5px 9px; border-radius: 3px; margin-top: 2px; }
+    .skin-note.warn { background: rgba(211,84,0,0.07); color: var(--orange); }
+    .skin-note.good { background: rgba(45,106,79,0.07); color: var(--safe); }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, var(--green) 0%, #2d4a2f 100%); padding: 100px 80px; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%); }
+    .cta-section .section-title { color: white; }
+    .cta-desc { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.8; max-width: 480px; margin: 0 auto 44px; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { background: #111; padding: 56px 80px 36px; color: rgba(255,255,255,0.4); }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 44px; padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: white; font-weight: 300; letter-spacing: 0.08em; }
+    .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 5px; }
+    .footer-links { display: flex; gap: 44px; }
+    .footer-col h5 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 9px; font-size: 13px; }
+    .footer-col ul li a { text-decoration: none; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: rgba(255,255,255,0.8); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .footer-bottom a { color: rgba(255,255,255,0.2); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .hero, .checker-wrapper, .community-section { grid-template-columns: 1fr; }
+      .hero-left, .hero-right { padding: 56px 28px; }
+      .section, .features-section, .marketplace-section, .checker-section, .cta-section, .community-section { padding: 56px 28px; }
+      .features-grid { grid-template-columns: 1fr; }
+      footer { padding: 44px 28px 28px; }
+      .footer-top { flex-direction: column; gap: 36px; }
+      nav { padding: 16px 22px; }
+      nav ul { display: none; }
+    }
+
+    /* ═══ GROWTH ANALYTICS ═══ */
+    .growth-section { padding: 100px 80px; background: var(--cream); }
+    .growth-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 48px; }
+    .growth-stat { background: white; padding: 32px 28px; border: 1px solid rgba(0,0,0,0.06); text-align: center; transition: all 0.2s; }
+    .growth-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(28,43,30,0.08); }
+    .growth-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--green); line-height: 1; margin-bottom: 6px; }
+    .growth-stat-num span { font-size: 24px; color: var(--sage); }
+    .growth-stat-label { font-size: 12px; color: var(--text-light); letter-spacing: 0.04em; }
+    .growth-stat-delta { font-size: 11px; color: var(--safe); margin-top: 6px; font-weight: 500; }
+    .growth-chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .growth-chart-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 28px; }
+    .growth-chart-card h4 { font-size: 13px; font-weight: 500; color: var(--green); margin-bottom: 20px; }
+    .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 80px; }
+    .bar { flex: 1; border-radius: 2px 2px 0 0; transition: all 0.6s ease; position: relative; cursor: pointer; }
+    .bar:hover { opacity: 0.8; }
+    .bar-label { font-size: 9px; color: var(--text-light); text-align: center; margin-top: 4px; }
+    .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .category-bars { display: flex; flex-direction: column; gap: 10px; }
+    .cat-row { display: flex; align-items: center; gap: 12px; }
+    .cat-name { font-size: 11px; color: var(--text-mid); width: 80px; flex-shrink: 0; }
+    .cat-bar-wrap { flex: 1; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+    .cat-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .cat-pct { font-size: 11px; color: var(--text-light); width: 36px; text-align: right; flex-shrink: 0; }
+
+    /* ═══ REFERRAL PROGRAM ═══ */
+    .referral-section { padding: 100px 80px; background: var(--green); color: white; }
+    .referral-section .section-label { color: var(--sage-light); }
+    .referral-section .section-title { color: white; }
+    .referral-section .section-sub { color: rgba(255,255,255,0.6); }
+    .referral-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .referral-steps { display: flex; flex-direction: column; gap: 0; }
+    .ref-step { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07); position: relative; }
+    .ref-step:last-child { border-bottom: none; }
+    .ref-step-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--gold); opacity: 0.5; line-height: 1; flex-shrink: 0; width: 36px; }
+    .ref-step-content h4 { font-size: 15px; font-weight: 500; color: white; margin-bottom: 6px; }
+    .ref-step-content p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+    .referral-rewards { display: flex; flex-direction: column; gap: 16px; }
+    .reward-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 24px 28px; transition: background 0.2s; }
+    .reward-card:hover { background: rgba(255,255,255,0.1); }
+    .reward-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .reward-tier { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .reward-value { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: white; font-weight: 300; }
+    .reward-card p { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .referral-link-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+    .referral-link-text { font-size: 12px; color: rgba(255,255,255,0.4); font-family: monospace; }
+    .referral-copy-btn { background: var(--gold); color: var(--green); border: none; padding: 8px 16px; border-radius: 2px; font-size: 11px; font-weight: 600; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
+    .referral-copy-btn:hover { background: white; }
+
+    /* ═══ MARKETING AI / CONTENT HUB ═══ */
+    .marketing-section { padding: 100px 80px; background: var(--warm-white); }
+    .marketing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: flex-start; margin-top: 48px; }
+    .ai-tool-tabs { display: flex; gap: 0; border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+    .ai-tab { flex: 1; padding: 10px; font-size: 11px; font-weight: 500; text-align: center; cursor: pointer; border: none; background: white; color: var(--text-light); letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; border-right: 1px solid rgba(0,0,0,0.08); }
+    .ai-tab:last-child { border-right: none; }
+    .ai-tab.active { background: var(--green); color: white; }
+    .ai-prompt-area { background: white; border: 1.5px solid rgba(0,0,0,0.09); border-radius: 4px; padding: 20px; margin-bottom: 14px; }
+    .ai-prompt-label { font-size: 11px; color: var(--text-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+    .ai-prompt-input { width: 100%; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-dark); resize: none; height: 72px; background: transparent; line-height: 1.6; }
+    .ai-tone-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tone-chip { padding: 5px 12px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.1); background: white; font-size: 11px; color: var(--text-mid); cursor: pointer; transition: all 0.2s; }
+    .tone-chip.active { background: var(--sage); color: white; border-color: var(--sage); }
+    .tone-chip:hover:not(.active) { border-color: var(--sage); color: var(--sage); }
+    .ai-generate-btn { background: var(--green); color: white; border: none; padding: 12px 24px; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .ai-generate-btn:hover { background: var(--sage); }
+    .ai-output { background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 4px; padding: 24px; min-height: 200px; position: relative; }
+    .ai-output-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 14px; font-weight: 500; }
+    .ai-output-text { font-size: 13px; color: var(--text-dark); line-height: 1.8; white-space: pre-wrap; }
+    .ai-output-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .ai-action-btn { padding: 7px 14px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); background: transparent; font-size: 11px; color: var(--text-mid); cursor: pointer; transition: all 0.2s; }
+    .ai-action-btn:hover { border-color: var(--green); color: var(--green); }
+    .ai-typing { display: inline-block; width: 6px; height: 14px; background: var(--sage); border-radius: 1px; animation: blink 0.8s infinite; vertical-align: middle; margin-left: 2px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .content-calendar-preview { display: flex; flex-direction: column; gap: 12px; }
+    .cal-week-header { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); font-weight: 500; padding-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .cal-post-item { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+    .cal-post-item:hover { border-color: var(--sage-light); }
+    .cal-platform-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-ig { background: #E1306C; }
+    .dot-tk { background: #000; }
+    .dot-li { background: #0077B5; }
+    .dot-fb { background: #1877F2; }
+    .cal-post-info { flex: 1; }
+    .cal-post-title { font-size: 12px; font-weight: 500; color: var(--green); margin-bottom: 2px; }
+    .cal-post-meta { font-size: 11px; color: var(--text-light); }
+    .cal-post-status { font-size: 10px; padding: 3px 8px; border-radius: 2px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+    .status-scheduled { background: rgba(74,103,65,0.1); color: var(--sage); }
+    .status-draft { background: rgba(201,169,110,0.15); color: #8a6a30; }
+    .status-posted { background: rgba(45,106,79,0.1); color: var(--safe); }
+
+    /* ═══ SALES PIPELINE ═══ */
+    .pipeline-section { padding: 100px 80px; background: var(--cream); }
+    .pipeline-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-top: 48px; }
+    .pipeline-stages { display: flex; flex-direction: column; gap: 12px; }
+    .pipeline-stage { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 18px 22px; display: flex; align-items: center; gap: 16px; transition: all 0.2s; cursor: pointer; }
+    .pipeline-stage:hover { border-color: var(--sage); transform: translateX(4px); }
+    .stage-color { width: 4px; height: 40px; border-radius: 2px; flex-shrink: 0; }
+    .stage-info { flex: 1; }
+    .stage-name { font-size: 13px; font-weight: 500; color: var(--green); margin-bottom: 2px; }
+    .stage-desc { font-size: 11px; color: var(--text-light); }
+    .stage-count { text-align: right; }
+    .stage-num { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--green); font-weight: 500; }
+    .stage-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pipeline-right { display: flex; flex-direction: column; gap: 16px; }
+    .pipeline-metric { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 4px; padding: 24px 28px; }
+    .pipeline-metric-label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .pipeline-metric-value { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--green); font-weight: 300; }
+    .pipeline-metric-sub { font-size: 12px; color: var(--safe); margin-top: 4px; }
+    .pipeline-leads { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .lead-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 3px; }
+    .lead-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .lead-info { flex: 1; }
+    .lead-name { font-size: 12px; font-weight: 500; color: var(--green); }
+    .lead-type { font-size: 11px; color: var(--text-light); }
+    .lead-score { font-size: 13px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#"><img src="https://base44.app/api/apps/69b3068b64689fd83741a39f/files/public/69b3068b64689fd83741a39f/8057b7d69_213c04079_noBgColor.png" alt="Gardin" class="gardin-nav-logo" /></a>
+    <ul>
+      <!-- MARKET DROPDOWN -->
+      <li class="nav-dropdown">
+        <a href="#" onclick="return false;" data-en="Market" data-fr="Marché">Market</a>
+        <div class="dropdown-menu">
+          <div class="dropdown-section-title">Individual</div>
+          <a href="#" onclick="openPanel('panel-individual-marketplace'); return false;" data-en="Marketplace" data-fr="Marché individuel">💅 Marketplace</a>
+          <a href="#" onclick="openPanel('panel-self-employed'); return false;" data-en="Self-Employed" data-fr="Travailleur autonome">🧑‍💼 Self-Employed</a>
+          <a href="#checker" onclick="closeAllPanels();" data-en="Ingredient Checker" data-fr="Analyseur d'ingrédients">🔬 Ingredient Checker</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">Business</div>
+          <a href="#" onclick="openPanel('panel-wholesale'); return false;" data-en="Wholesale" data-fr="Gros">🏭 Wholesale</a>
+          <a href="#" onclick="openPanel('panel-privatelabel'); return false;" data-en="Private Label Formulation" data-fr="Formulation marque privée">🧪 Private Label Formulation</a>
+          <a href="#" onclick="openPanel('panel-b2b'); return false;" data-en="B2B Marketplace" data-fr="Marché B2B">🤝 B2B Marketplace</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">Supplier</div>
+          <a href="#" onclick="openPanel('panel-suppliers'); return false;" data-en="All Suppliers" data-fr="Tous les fournisseurs">📦 All Suppliers</a>
+        </div>
+      </li>
+      <li><a href="#community" onclick="openCommunityModal(); return false;" data-en="Community" data-fr="Communauté">Community</a></li>
+      <li><a href="#members" data-en="Members" data-fr="Membres">Members</a></li>
+      <li>
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang('en', this)">EN</button>
+          <button class="lang-btn" onclick="setLang('fr', this)">FR</button>
+        </div>
+      </li>
+      <li><a href="#join" class="nav-cta" data-en="Join Free" data-fr="Rejoindre">Join Free</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow" data-en="Canada's Beauty Network" data-fr="Le réseau beauté du Canada">Canada's Beauty Network</p>
+      <h1 class="hero-title">
+        <span data-en="Where beauty" data-fr="Là où la beauté">Where beauty</span><br/>
+        <em data-en="professionals" data-fr="des professionnels">professionals</em><br/>
+        <span data-en="grow together." data-fr="grandit ensemble.">grow together.</span>
+      </h1>
+      <p class="hero-desc" data-en="Gardin is the marketplace and community built exclusively for the beauty industry — connecting nail techs, makeup artists, massotherapists, suppliers, labs, and brands in one curated space." data-fr="Gardin est le marché et la communauté conçus exclusivement pour l'industrie de la beauté — reliant les techniciennes en ongles, maquilleurs, massothérapeutes, fournisseurs, laboratoires et marques en un seul espace.">Gardin is the marketplace and community built exclusively for the beauty industry — connecting nail techs, makeup artists, massotherapists, suppliers, labs, and brands in one curated space.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary" data-en="Join the Community" data-fr="Rejoindre la communauté">Join the Community</a>
+        <a href="#marketplace" class="btn-outline" data-en="Browse Marketplace" data-fr="Parcourir le marché">Browse Marketplace</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-card"><div class="stat-icon green">🌿</div><div class="stat-info"><h3>B2B & B2C</h3><p data-en="One platform for professionals and consumers" data-fr="Une plateforme pour pros et consommateurs">One platform for professionals and consumers</p></div></div>
+      <div class="hero-stat-card"><div class="stat-icon gold">💬</div><div class="stat-info"><h3 data-en="Community First" data-fr="Communauté d'abord">Community First</h3><p data-en="Discuss, share, learn and grow with peers" data-fr="Discuter, partager, apprendre et grandir">Discuss, share, learn and grow with peers</p></div></div>
+      <div class="hero-stat-card"><div class="stat-icon sage">🏪</div><div class="stat-info"><h3 data-en="Live Marketplace" data-fr="Marché en ligne">Live Marketplace</h3><p data-en="Products, services, wholesale & collabs" data-fr="Produits, services, gros & collabs">Products, services, wholesale & collabs</p></div></div>
+      <div class="hero-stat-card"><div class="stat-icon green">🔬</div><div class="stat-info"><h3 data-en="Ingredient Checker" data-fr="Analyseur d'ingrédients">Ingredient Checker</h3><p data-en="Decode any product label by skin type" data-fr="Décodez chaque étiquette selon votre peau">Decode any product label by skin type</p></div></div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section class="section" id="members">
+    <p class="section-label" data-en="Who it's for" data-fr="Pour qui">Who it's for</p>
+    <h2 class="section-title"><span data-en="Every corner of the" data-fr="Chaque acteur de">Every corner of the</span><br/><em data-en="beauty industry" data-fr="l'industrie beauté">beauty industry</em><span data-en=", welcome." data-fr=", bienvenu.">, welcome.</span></h2>
+    <p class="section-sub" data-en="From independent nail techs to labs and suppliers — Gardin is the first Canadian platform built to connect every player in beauty." data-fr="Des techniciennes en ongles indépendantes aux laboratoires et fournisseurs — Gardin est la première plateforme canadienne pour connecter tous les acteurs de la beauté.">From independent nail techs to labs and suppliers — Gardin is the first Canadian platform built to connect every player in beauty.</p>
+    <div class="members-grid">
+      <div class="member-card"><div class="emoji">💅</div><h4 data-en="Nail Technicians" data-fr="Techniciennes en ongles">Nail Technicians</h4><p data-en="Source supplies, find clients, share techniques" data-fr="Sourcer, trouver des clients, partager">Source supplies, find clients, share techniques</p></div>
+      <div class="member-card"><div class="emoji">💄</div><h4 data-en="Makeup Artists" data-fr="Maquilleurs·ses">Makeup Artists</h4><p data-en="Showcase your work, source products, get booked" data-fr="Montrez votre travail, sourcez, soyez réservés">Showcase your work, source products, get booked</p></div>
+      <div class="member-card"><div class="emoji">🕯️</div><h4 data-en="Massotherapists" data-fr="Massothérapeutes">Massotherapists</h4><p data-en="Connect with clients and wellness brands" data-fr="Connectez avec clients et marques bien-être">Connect with clients and wellness brands</p></div>
+      <div class="member-card"><div class="emoji">🧴</div><h4 data-en="Estheticians" data-fr="Esthéticiennes">Estheticians</h4><p data-en="Access wholesale, build your clientele" data-fr="Accédez au gros, développez votre clientèle">Access wholesale, build your clientele</p></div>
+      <div class="member-card"><div class="emoji">🏪</div><h4 data-en="Salons & Spas" data-fr="Salons & Spas">Salons & Spas</h4><p data-en="Find staff, post openings, connect with suppliers" data-fr="Trouvez du personnel, des fournisseurs">Find staff, post openings, connect with suppliers</p></div>
+      <div class="member-card"><div class="emoji">🔬</div><h4 data-en="Labs & Suppliers" data-fr="Labos & Fournisseurs">Labs & Suppliers</h4><p data-en="Reach beauty businesses at scale, B2B direct" data-fr="Atteignez les entreprises beauté, B2B direct">Reach beauty businesses at scale, B2B direct</p></div>
+      <div class="member-card"><div class="emoji">✨</div><h4 data-en="Brands" data-fr="Marques">Brands</h4><p data-en="Launch products, find stockists, grow distribution" data-fr="Lancez des produits, trouvez des distributeurs">Launch products, find stockists, grow distribution</p></div>
+      <div class="member-card"><div class="emoji">🎓</div><h4 data-en="Educators" data-fr="Formateurs·rices">Educators</h4><p data-en="Offer training, masterclasses, certifications" data-fr="Offrez des formations, masterclasses, certifications">Offer training, masterclasses, certifications</p></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" id="features">
+    <p class="section-label" data-en="The platform" data-fr="La plateforme">The platform</p>
+    <h2 class="section-title"><span data-en="Everything beauty" data-fr="Tout ce dont les pros">Everything beauty</span><br/><span data-en="professionals need." data-fr="de la beauté ont besoin.">professionals need.</span></h2>
+    <p class="section-sub" data-en="Not another generic marketplace. A purpose-built ecosystem designed around how the beauty industry actually works." data-fr="Pas un autre marché générique. Un écosystème conçu autour du fonctionnement réel de l'industrie beauté.">Not another generic marketplace. A purpose-built ecosystem designed around how the beauty industry actually works.</p>
+    <div class="features-grid">
+      <div class="feature-block"><div class="feature-number">01</div><h3 data-en="Smart Marketplace" data-fr="Marché intelligent">Smart Marketplace</h3><p data-en="Buy, sell and trade products, services, equipment, and wholesale deals. B2B and B2C in the same place." data-fr="Achetez, vendez et échangez produits, services, équipements et contrats de gros. B2B et B2C au même endroit.">Buy, sell and trade products, services, equipment, and wholesale deals.</p></div>
+      <div class="feature-block"><div class="feature-number">02</div><h3 data-en="Professional Community" data-fr="Communauté professionnelle">Professional Community</h3><p data-en="Discussion forums, Q&A, technique sharing, trend alerts. The beauty network you've been missing." data-fr="Forums, Q&A, partage de techniques, alertes tendances. Le réseau beauté qui vous manquait.">Discussion forums, Q&A, technique sharing, trend alerts.</p></div>
+      <div class="feature-block"><div class="feature-number">03</div><h3 data-en="Verified Profiles" data-fr="Profils vérifiés">Verified Profiles</h3><p data-en="Every professional is verified. Build credibility, earn reviews, and get discovered by the right clients." data-fr="Chaque professionnel est vérifié. Construisez votre crédibilité et soyez découverts.">Every professional is verified. Build credibility and get discovered.</p></div>
+      <div class="feature-block"><div class="feature-number">04</div><h3 data-en="Ingredient Checker" data-fr="Analyseur d'ingrédients">Ingredient Checker</h3><p data-en="Paste any label, select your skin type, and get a personalized ingredient analysis instantly." data-fr="Collez n'importe quelle étiquette, sélectionnez votre type de peau et obtenez une analyse personnalisée.">Paste any label, select your skin type, and get a personalized analysis.</p></div>
+      <div class="feature-block"><div class="feature-number">05</div><h3 data-en="Events & Training" data-fr="Événements & Formations">Events & Training</h3><p data-en="Workshops, trade shows, masterclasses, pop-ups. In-person and virtual, Canadian and bilingual." data-fr="Ateliers, salons professionnels, masterclasses, pop-ups. En présentiel et en ligne, bilingue.">Workshops, trade shows, masterclasses, pop-ups.</p></div>
+      <div class="feature-block"><div class="feature-number">06</div><h3 data-en="Bilingual FR & EN" data-fr="Bilingue FR & EN">Bilingual FR & EN</h3><p data-en="Built for Canada from day one. Because beauty doesn't have a language barrier." data-fr="Conçu pour le Canada dès le premier jour. La beauté n'a pas de barrière linguistique.">Built for Canada from day one.</p></div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE -->
+  <section class="marketplace-section" id="marketplace">
+    <p class="section-label" data-en="Marketplace" data-fr="Le marché">Marketplace</p>
+    <h2 class="section-title"><span data-en="Individual. Business." data-fr="Particulier. Entreprise.">Individual. Business.</span><br/><em data-en="Supplier." data-fr="Fournisseur.">Supplier.</em></h2>
+    <p class="section-sub" data-en="Book beauty professionals, sell your services, find wholesale suppliers, or access private label formulation — all in one place." data-fr="Réservez des professionnels de la beauté, vendez vos services, trouvez des fournisseurs en gros ou accédez à la formulation marque privée — tout en un seul endroit.">Book beauty professionals, sell your services, find wholesale suppliers.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;margin-top:-24px;">
+      <button onclick="openPanel('panel-individual-marketplace')" class="btn-primary" style="font-size:12px;padding:10px 22px;">💅 Individual Marketplace</button>
+      <button onclick="openPanel('panel-self-employed')" class="btn-primary" style="font-size:12px;padding:10px 22px;background:#4A6741;">🧑‍💼 Self-Employed</button>
+      <button onclick="openPanel('panel-wholesale')" class="btn-primary" style="font-size:12px;padding:10px 22px;background:#1a1a1a;">🏭 Wholesale</button>
+      <button onclick="openPanel('panel-b2b')" class="btn-primary" style="font-size:12px;padding:10px 22px;background:#1a1a1a;">🤝 B2B Marketplace</button>
+      <button onclick="openPanel('panel-suppliers')" class="btn-primary" style="font-size:12px;padding:10px 22px;background:#C9A96E;color:#1f3d2b;">📦 Suppliers</button>
+    </div>
+    <div class="listings-preview">
+      <div class="listing-card"><div class="listing-img green-bg">🧴</div><div class="listing-body"><span class="listing-badge badge-b2b" data-en="Wholesale B2B" data-fr="Gros B2B">Wholesale B2B</span><h4 data-en="Vegan Skincare Collection — 50-unit MOQ" data-fr="Collection soins vegan — MOQ 50 unités">Vegan Skincare Collection — 50-unit MOQ</h4><p data-en="Canadian-formulated, cruelty-free. Lab-direct pricing for salons and estheticians." data-fr="Formulation canadienne, sans cruauté. Prix direct labo pour salons et esthéticiennes.">Canadian-formulated, cruelty-free.</p><div class="listing-footer"><span class="listing-price">$12/unit</span><span class="listing-action" data-en="Inquire →" data-fr="Demande →">Inquire →</span></div></div></div>
+      <div class="listing-card"><div class="listing-img sage-bg">💅</div><div class="listing-body"><span class="listing-badge badge-b2c" data-en="Service B2C" data-fr="Service B2C">Service B2C</span><h4 data-en="Nail Art Session — Montreal" data-fr="Séance nail art — Montréal">Nail Art Session — Montreal</h4><p data-en="Certified nail tech, 5+ years experience. Home visits available." data-fr="Technicienne certifiée, 5+ ans d'expérience. Visites à domicile disponibles.">Certified nail tech, 5+ years experience.</p><div class="listing-footer"><span class="listing-price">$85</span><span class="listing-action" data-en="Book →" data-fr="Réserver →">Book →</span></div></div></div>
+      <div class="listing-card"><div class="listing-img gold-bg">🎓</div><div class="listing-body"><span class="listing-badge badge-both" data-en="Training" data-fr="Formation">Training</span><h4 data-en="Advanced Lash Extension Masterclass" data-fr="Masterclass Extension de cils avancée">Advanced Lash Extension Masterclass</h4><p data-en="2-day intensive. Certificate included. 8 participants max." data-fr="Intensif 2 jours. Certificat inclus. 8 participants max.">2-day intensive. Certificate included.</p><div class="listing-footer"><span class="listing-price">$340</span><span class="listing-action" data-en="Register →" data-fr="S'inscrire →">Register →</span></div></div></div>
+      <div class="listing-card"><div class="listing-img cream-bg">🔬</div><div class="listing-body"><span class="listing-badge badge-b2b" data-en="Lab Direct" data-fr="Labo Direct">Lab Direct</span><h4 data-en="Private Label Formulation Services" data-fr="Services de formulation marque privée">Private Label Formulation Services</h4><p data-en="Canadian GMP lab. White-label skincare, haircare & body care. MOQ from 200 units." data-fr="Labo GMP canadien. Soins peau, cheveux & corps. MOQ dès 200 unités.">Canadian GMP lab. MOQ from 200 units.</p><div class="listing-footer"><span class="listing-price" data-en="Custom Quote" data-fr="Devis">Custom Quote</span><span class="listing-action" data-en="Connect →" data-fr="Contacter →">Connect →</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="community-section" id="community">
+    <div>
+      <p class="section-label" data-en="Community" data-fr="Communauté">Community</p>
+      <h2 class="section-title"><span data-en="The conversation" data-fr="La conversation">The conversation</span><br/><span data-en="beauty was" data-fr="que la beauté">beauty was</span><br/><em data-en="missing." data-fr="attendait.">missing.</em></h2>
+      <p class="section-sub" data-en="Share techniques, ask questions, discover trends, and build real relationships with beauty professionals across Canada. In French or English — your choice." data-fr="Partagez des techniques, posez des questions, découvrez des tendances et construisez de vraies relations avec des professionnels de la beauté partout au Canada. En français ou en anglais — votre choix.">Share techniques, ask questions, discover trends, and build real relationships.</p>
+      <button onclick="openCommunityModal()" class="btn-primary" style="color:var(--green);background:var(--gold);border:none;cursor:pointer;" data-en="Join the Conversation" data-fr="Rejoindre la discussion">Join the Conversation</button>
+    </div>
+    <div class="community-posts">
+      <div class="post-card"><div class="post-meta"><div class="post-avatar">💅</div><div><div class="post-author">Sophie M.</div><div class="post-role">Nail Tech · Montréal</div></div></div><h4>Meilleure colle pour extension de cils en hiver?</h4><p>J'ai remarqué que la colle tient moins bien quand il fait froid. Quelqu'un a des recommandations?</p><div class="post-stats"><span>❤️ 24</span><span>💬 11</span></div></div>
+      <div class="post-card"><div class="post-meta"><div class="post-avatar">💄</div><div><div class="post-author">Aisha K.</div><div class="post-role">MUA · Toronto</div></div></div><h4 data-en="Found the best skincare supplier for editorial work" data-fr="Meilleur fournisseur soins pour shooting éditorial">Found the best skincare supplier for editorial work</h4><p data-en="Just partnered with a Quebec lab. The quality is unreal and fully vegan." data-fr="Je viens de m'associer à un labo québécois. La qualité est incroyable et 100% vegan.">Just partnered with a Quebec lab. The quality is unreal and fully vegan.</p><div class="post-stats"><span>❤️ 47</span><span>💬 18</span></div></div>
+      <div class="post-card"><div class="post-meta"><div class="post-avatar">🔬</div><div><div class="post-author">DermaCo Labs</div><div class="post-role" data-en="Supplier · Vancouver" data-fr="Fournisseur · Vancouver">Supplier · Vancouver</div></div></div><h4 data-en="Peptide serums trend — how are pros using them?" data-fr="Tendance sérums peptides — comment les pros les utilisent?">Peptide serums trend — how are pros using them?</h4><p data-en="We're seeing huge demand for peptide-based formulas. What are beauty pros saying?" data-fr="Nous observons une demande énorme pour les formules à base de peptides. Qu'en pensent les pros?">Huge demand for peptide-based formulas. What are beauty pros saying?</p><div class="post-stats"><span>❤️ 31</span><span>💬 22</span></div></div>
+    </div>
+  </section>
+
+  <!-- INGREDIENT CHECKER -->
+  <section class="checker-section" id="checker">
+    <p class="section-label" data-en="Ingredient Checker" data-fr="Analyseur d'ingrédients">Ingredient Checker</p>
+    <h2 class="section-title"><span data-en="Know exactly what's" data-fr="Sachez exactement ce qui">Know exactly what's</span><br/><em data-en="on your skin." data-fr="touche votre peau.">on your skin.</em></h2>
+    <p class="section-sub" data-en="Paste any product ingredient list, select your skin type, and Gardin will analyze every ingredient — flagging what to avoid, what's amazing, and what's not vegan." data-fr="Collez n'importe quelle liste d'ingrédients, sélectionnez votre type de peau, et Gardin analysera chaque ingrédient — signalant ce qu'il faut éviter, ce qui est excellent et ce qui n'est pas vegan.">Paste any product ingredient list, select your skin type, and Gardin will analyze every ingredient.</p>
+
+    <div class="checker-controls">
+      <span class="skin-filter-label" data-en="My skin:" data-fr="Ma peau :">My skin:</span>
+      <button class="skin-btn active" onclick="setSkin('all', this)" data-en="All Skin Types" data-fr="Tous types">All Skin Types</button>
+      <button class="skin-btn" onclick="setSkin('dry', this)" data-en="Dry" data-fr="Sèche">Dry</button>
+      <button class="skin-btn" onclick="setSkin('oily', this)" data-en="Oily / Acne-Prone" data-fr="Grasse / Acnéique">Oily / Acne-Prone</button>
+      <button class="skin-btn" onclick="setSkin('sensitive', this)" data-en="Sensitive" data-fr="Sensible">Sensitive</button>
+      <button class="skin-btn" onclick="setSkin('combination', this)" data-en="Combination" data-fr="Mixte">Combination</button>
+      <button class="skin-btn" onclick="setSkin('mature', this)" data-en="Mature" data-fr="Mature">Mature</button>
+    </div>
+
+    <div class="checker-wrapper">
+      <div class="checker-input-side">
+        <textarea class="checker-textarea" id="ingredientInput" data-placeholder-en="Paste your ingredient list here...&#10;&#10;e.g. Aqua, Glycerin, Niacinamide, Retinol, Parfum, Sodium Lauryl Sulfate..." data-placeholder-fr="Collez votre liste d'ingrédients ici...&#10;&#10;ex. Aqua, Glycérine, Niacinamide, Rétinol, Parfum, Sodium Lauryl Sulfate..." placeholder="Paste your ingredient list here...&#10;&#10;e.g. Aqua, Glycerin, Niacinamide, Retinol, Parfum, Sodium Lauryl Sulfate..."></textarea>
+        <div class="checker-actions">
+          <button class="checker-btn" id="checkBtn" onclick="checkIngredients()" data-en="🔬 Analyze Ingredients" data-fr="🔬 Analyser les ingrédients">🔬 Analyze Ingredients</button>
+          <button class="clear-btn" onclick="clearChecker()" data-en="Clear" data-fr="Effacer">Clear</button>
+        </div>
+        <div class="overall-score" id="overallScore">
+          <div class="score-grade" id="scoreGrade">A</div>
+          <div style="flex:1">
+            <div class="score-label" id="scoreLabel">Overall Safety Score</div>
+            <div class="score-bar-wrap" style="margin-top:5px"><div class="score-bar" id="scoreBar" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="checker-summary" id="checkerSummary"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="results-filter" id="resultsFilter">
+          <button class="rf-btn active" onclick="filterResults('all',this)" data-en="All" data-fr="Tous">All</button>
+          <button class="rf-btn" onclick="filterResults('flag',this)" data-en="⚠ Flagged" data-fr="⚠ Signalés">⚠ Flagged</button>
+          <button class="rf-btn" onclick="filterResults('caution',this)" data-en="⚡ Caution" data-fr="⚡ Attention">⚡ Caution</button>
+          <button class="rf-btn" onclick="filterResults('safe',this)" data-en="✓ Safe" data-fr="✓ Sûrs">✓ Safe</button>
+          <button class="rf-btn" onclick="filterResults('unknown',this)" data-en="? Unknown" data-fr="? Inconnus">? Unknown</button>
+        </div>
+        <div class="checker-results-side" id="checkerResults">
+          <div class="checker-placeholder">
+            <span>🔬</span>
+            <p id="placeholderText" data-en="Paste an ingredient list on the left, choose your skin type, and hit Analyze." data-fr="Collez une liste d'ingrédients à gauche, choisissez votre type de peau, puis cliquez sur Analyser.">Paste an ingredient list on the left, choose your skin type, and hit Analyze.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- GROWTH ANALYTICS -->
+  <section class="growth-section" id="analytics">
+    <p class="section-label" data-en="Growth Analytics" data-fr="Analytiques de croissance">Growth Analytics</p>
+    <h2 class="section-title"><span data-en="A garden that" data-fr="Un jardin qui">A garden that</span><br/><em data-en="grows in real time." data-fr="grandit en temps réel.">grows in real time.</em></h2>
+    <p class="section-sub" data-en="Every member, listing, post and event contributes to a living ecosystem. Watch your impact grow — whether you're a nail tech in Montréal or a lab in Vancouver." data-fr="Chaque membre, annonce, publication et événement contribue à un écosystème vivant. Regardez votre impact grandir — que vous soyez technicienne à Montréal ou laboratoire à Vancouver.">Every member, listing, post and event contributes to a living ecosystem. Watch your impact grow.</p>
+
+    <div class="growth-grid">
+      <div class="growth-stat">
+        <div class="growth-stat-num">12<span>K+</span></div>
+        <div class="growth-stat-label" data-en="Active Members" data-fr="Membres actifs">Active Members</div>
+        <div class="growth-stat-delta">↑ 18% this month</div>
+      </div>
+      <div class="growth-stat">
+        <div class="growth-stat-num">3<span>.4K</span></div>
+        <div class="growth-stat-label" data-en="Live Listings" data-fr="Annonces actives">Live Listings</div>
+        <div class="growth-stat-delta">↑ 24% this month</div>
+      </div>
+      <div class="growth-stat">
+        <div class="growth-stat-num">8<span>.9K</span></div>
+        <div class="growth-stat-label" data-en="Community Posts" data-fr="Publications communautaires">Community Posts</div>
+        <div class="growth-stat-delta">↑ 31% this month</div>
+      </div>
+      <div class="growth-stat">
+        <div class="growth-stat-num">$2<span>.1M</span></div>
+        <div class="growth-stat-label" data-en="B2B Deals Initiated" data-fr="Transactions B2B initiées">B2B Deals Initiated</div>
+        <div class="growth-stat-delta">↑ 42% this month</div>
+      </div>
+    </div>
+
+    <div class="growth-chart-row">
+      <div class="growth-chart-card">
+        <h4 data-en="New Members — Last 7 Days" data-fr="Nouveaux membres — 7 derniers jours">New Members — Last 7 Days</h4>
+        <div class="bar-chart" id="memberChart"></div>
+        <div style="display:flex;gap:8px;margin-top:4px;" id="memberLabels"></div>
+      </div>
+      <div class="growth-chart-card">
+        <h4 data-en="Top Categories by Activity" data-fr="Meilleures catégories par activité">Top Categories by Activity</h4>
+        <div class="category-bars" id="categoryBars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERRAL PROGRAM -->
+  <section class="referral-section" id="referral">
+    <div class="referral-grid">
+      <div>
+        <p class="section-label" data-en="Referral Program" data-fr="Programme de parrainage">Referral Program</p>
+        <h2 class="section-title"><span data-en="Share the garden." data-fr="Partagez le jardin.">Share the garden.</span><br/><em data-en="Earn together." data-fr="Gagnez ensemble.">Earn together.</em></h2>
+        <p class="section-sub" data-en="Beauty grows when we share. Refer a colleague, supplier, or brand — and both of you benefit. No limits, no expiry." data-fr="La beauté grandit quand on partage. Parrainez un collègue, fournisseur ou marque — et profitez tous les deux. Sans limite, sans expiration.">Beauty grows when we share. Refer a colleague, supplier, or brand — and both of you benefit.</p>
+        <div class="referral-steps">
+          <div class="ref-step">
+            <div class="ref-step-num">01</div>
+            <div class="ref-step-content">
+              <h4 data-en="Get your unique link" data-fr="Obtenez votre lien unique">Get your unique link</h4>
+              <p data-en="Every Gardin member gets a personalized referral link from their profile." data-fr="Chaque membre Gardin reçoit un lien de parrainage personnalisé depuis son profil.">Every Gardin member gets a personalized referral link from their profile.</p>
+            </div>
+          </div>
+          <div class="ref-step">
+            <div class="ref-step-num">02</div>
+            <div class="ref-step-content">
+              <h4 data-en="Share with your network" data-fr="Partagez avec votre réseau">Share with your network</h4>
+              <p data-en="Send it to other beauty pros, clients, suppliers — anyone who belongs in Gardin." data-fr="Envoyez-le à d'autres pros de la beauté, clients, fournisseurs — tous ceux qui ont leur place dans Gardin.">Send it to other beauty pros, clients, suppliers — anyone who belongs in Gardin.</p>
+            </div>
+          </div>
+          <div class="ref-step">
+            <div class="ref-step-num">03</div>
+            <div class="ref-step-content">
+              <h4 data-en="Both of you grow" data-fr="Vous grandissez tous les deux">Both of you grow</h4>
+              <p data-en="When they join, you both unlock credits, features, or cash rewards — depending on your tier." data-fr="Quand ils rejoignent, vous débloquez tous les deux des crédits, fonctionnalités ou récompenses en argent — selon votre niveau.">When they join, you both unlock credits, features, or cash rewards.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="referral-rewards">
+          <div class="reward-card">
+            <div class="reward-card-top">
+              <span class="reward-tier" data-en="Consumer Referral" data-fr="Parrainage consommateur">Consumer Referral</span>
+              <span class="reward-value">$10</span>
+            </div>
+            <p data-en="Refer a friend who joins as a consumer — get $10 in Gardin credits." data-fr="Parrainez un ami qui rejoint en tant que consommateur — obtenez 10 $ en crédits Gardin.">Refer a friend who joins as a consumer — get $10 in Gardin credits.</p>
+          </div>
+          <div class="reward-card">
+            <div class="reward-card-top">
+              <span class="reward-tier" data-en="Professional Referral" data-fr="Parrainage professionnel">Professional Referral</span>
+              <span class="reward-value">$30</span>
+            </div>
+            <p data-en="Refer a nail tech, MUA, esthetician or salon — earn $30 cash or credits." data-fr="Parrainez une technicienne, maquilleuse, esthéticienne ou salon — gagnez 30 $ en argent ou crédits.">Refer a nail tech, MUA, esthetician or salon — earn $30 cash or credits.</p>
+          </div>
+          <div class="reward-card">
+            <div class="reward-card-top">
+              <span class="reward-tier" data-en="Brand / Lab Referral" data-fr="Parrainage marque / labo">Brand / Lab Referral</span>
+              <span class="reward-value">$100</span>
+            </div>
+            <p data-en="Refer a supplier, lab or brand — earn $100 and unlock Elite status benefits." data-fr="Parrainez un fournisseur, labo ou marque — gagnez 100 $ et débloquez les avantages Elite.">Refer a supplier, lab or brand — earn $100 and unlock Elite status benefits.</p>
+          </div>
+          <div class="referral-link-box">
+            <span class="referral-link-text">luxiag.com/ref/your-name</span>
+            <button class="referral-copy-btn" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent=currentLang==='fr'?'Copier':'Copy link',2000)" data-en="Copy link" data-fr="Copier">Copy link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETING AI / CONTENT HUB -->
+  <section class="marketing-section" id="marketing">
+    <p class="section-label" data-en="Marketing AI & Content Hub" data-fr="IA Marketing & Hub de contenu">Marketing AI & Content Hub</p>
+    <h2 class="section-title"><span data-en="Your beauty brand," data-fr="Votre marque beauté,">Your beauty brand,</span><br/><em data-en="amplified by AI." data-fr="amplifiée par l'IA.">amplified by AI.</em></h2>
+    <p class="section-sub" data-en="Create captions, campaigns, and content in seconds — in French or English. Powered by Ora Intelligence, built for beauty professionals who don't have time to waste." data-fr="Créez des légendes, campagnes et contenus en secondes — en français ou en anglais. Propulsé par Ora Intelligence, conçu pour les pros de la beauté qui n'ont pas de temps à perdre.">Create captions, campaigns, and content in seconds — in French or English.</p>
+
+    <div class="marketing-grid">
+      <div>
+        <div class="ai-tool-tabs">
+          <button class="ai-tab active" onclick="setAiTab('caption',this)" data-en="Caption" data-fr="Légende">Caption</button>
+          <button class="ai-tab" onclick="setAiTab('campaign',this)" data-en="Campaign" data-fr="Campagne">Campaign</button>
+          <button class="ai-tab" onclick="setAiTab('email',this)" data-en="Email" data-fr="Courriel">Email</button>
+          <button class="ai-tab" onclick="setAiTab('bio',this)" data-en="Bio" data-fr="Bio">Bio</button>
+        </div>
+        <div class="ai-prompt-area">
+          <div class="ai-prompt-label" data-en="Describe your product or service" data-fr="Décrivez votre produit ou service">Describe your product or service</div>
+          <textarea class="ai-prompt-input" id="aiPrompt" data-placeholder-en="e.g. New vegan collagen serum for dry skin, launching this spring..." data-placeholder-fr="ex. Nouveau sérum collagène végan pour peau sèche, lancement ce printemps..." placeholder="e.g. New vegan collagen serum for dry skin, launching this spring..."></textarea>
+        </div>
+        <div class="ai-tone-row" id="toneRow">
+          <button class="tone-chip active" onclick="setTone(this)">✨ Luxe</button>
+          <button class="tone-chip" onclick="setTone(this)" data-en="🌿 Natural" data-fr="🌿 Naturel">🌿 Natural</button>
+          <button class="tone-chip" onclick="setTone(this)" data-en="🔥 Bold" data-fr="🔥 Audacieux">🔥 Bold</button>
+          <button class="tone-chip" onclick="setTone(this)" data-en="💬 Friendly" data-fr="💬 Amical">💬 Friendly</button>
+          <button class="tone-chip" onclick="setTone(this)" data-en="📊 Professional" data-fr="📊 Professionnel">📊 Professional</button>
+        </div>
+        <button class="ai-generate-btn" onclick="generateContent()" data-en="✦ Generate with Ora Intelligence" data-fr="✦ Générer avec Ora Intelligence">✦ Generate with Ora Intelligence</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="ai-output" id="aiOutput">
+          <div class="ai-output-label" data-en="Generated Content" data-fr="Contenu généré">Generated Content</div>
+          <div class="ai-output-text" id="aiOutputText" style="color:var(--text-light);font-style:italic;" data-en="Your AI-generated content will appear here. Try describing a product or service above." data-fr="Votre contenu généré par IA apparaîtra ici. Essayez de décrire un produit ou service ci-dessus.">Your AI-generated content will appear here. Try describing a product or service above.</div>
+          <div class="ai-output-actions" id="aiOutputActions" style="display:none;">
+            <button class="ai-action-btn" data-en="📋 Copy" data-fr="📋 Copier">📋 Copy</button>
+            <button class="ai-action-btn" data-en="🔄 Regenerate" data-fr="🔄 Régénérer" onclick="generateContent()">🔄 Regenerate</button>
+            <button class="ai-action-btn" data-en="📅 Schedule" data-fr="📅 Planifier">📅 Schedule</button>
+          </div>
+        </div>
+        <div class="growth-chart-card">
+          <div class="cal-week-header" data-en="Content Calendar — This Week" data-fr="Calendrier de contenu — Cette semaine">Content Calendar — This Week</div>
+          <div class="content-calendar-preview" style="margin-top:14px;">
+            <div class="cal-post-item"><div class="cal-platform-dot dot-ig"></div><div class="cal-post-info"><div class="cal-post-title" data-en="Spring Skincare Launch Reel" data-fr="Reel lancement soins printemps">Spring Skincare Launch Reel</div><div class="cal-post-meta">Instagram · Mon 9:00am</div></div><span class="cal-post-status status-scheduled" data-en="Scheduled" data-fr="Planifié">Scheduled</span></div>
+            <div class="cal-post-item"><div class="cal-platform-dot dot-tk"></div><div class="cal-post-info"><div class="cal-post-title" data-en="Behind the scenes — nail studio" data-fr="Dans les coulisses — studio ongles">Behind the scenes — nail studio</div><div class="cal-post-meta">TikTok · Tue 6:00pm</div></div><span class="cal-post-status status-draft" data-en="Draft" data-fr="Brouillon">Draft</span></div>
+            <div class="cal-post-item"><div class="cal-platform-dot dot-li"></div><div class="cal-post-info"><div class="cal-post-title" data-en="Wholesale partnerships open" data-fr="Partenariats gros ouverts">Wholesale partnerships open</div><div class="cal-post-meta">LinkedIn · Wed 10:00am</div></div><span class="cal-post-status status-posted" data-en="Posted" data-fr="Publié">Posted</span></div>
+            <div class="cal-post-item"><div class="cal-platform-dot dot-ig"></div><div class="cal-post-info"><div class="cal-post-title" data-en="Client transformation carousel" data-fr="Carrousel transformation client">Client transformation carousel</div><div class="cal-post-meta">Instagram · Fri 12:00pm</div></div><span class="cal-post-status status-scheduled" data-en="Scheduled" data-fr="Planifié">Scheduled</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALES PIPELINE -->
+  <section class="pipeline-section" id="pipeline">
+    <p class="section-label" data-en="Sales Pipeline" data-fr="Pipeline de ventes">Sales Pipeline</p>
+    <h2 class="section-title"><span data-en="Turn connections" data-fr="Transformez vos connexions">Turn connections</span><br/><em data-en="into contracts." data-fr="en contrats.">into contracts.</em></h2>
+    <p class="section-sub" data-en="From first inquiry to signed deal — Gardin tracks every B2B opportunity for labs, suppliers, and brands. Never lose a lead again." data-fr="De la première demande au contrat signé — Gardin suit chaque opportunité B2B pour les labos, fournisseurs et marques. Ne perdez plus jamais un prospect.">From first inquiry to signed deal — Gardin tracks every B2B opportunity. Never lose a lead again.</p>
+
+    <div class="pipeline-layout">
+      <div>
+        <div class="pipeline-stages">
+          <div class="pipeline-stage"><div class="stage-color" style="background:#7A9B6E"></div><div class="stage-info"><div class="stage-name" data-en="New Inquiry" data-fr="Nouvelle demande">New Inquiry</div><div class="stage-desc" data-en="First contact via listing or profile" data-fr="Premier contact via annonce ou profil">First contact via listing or profile</div></div><div class="stage-count"><div class="stage-num">24</div><div class="stage-label" data-en="leads" data-fr="prospects">leads</div></div></div>
+          <div class="pipeline-stage"><div class="stage-color" style="background:#C9A96E"></div><div class="stage-info"><div class="stage-name" data-en="Qualified" data-fr="Qualifié">Qualified</div><div class="stage-desc" data-en="Budget & intent confirmed" data-fr="Budget et intention confirmés">Budget & intent confirmed</div></div><div class="stage-count"><div class="stage-num">14</div><div class="stage-label" data-en="leads" data-fr="prospects">leads</div></div></div>
+          <div class="pipeline-stage"><div class="stage-color" style="background:#4A6741"></div><div class="stage-info"><div class="stage-name" data-en="Proposal Sent" data-fr="Proposition envoyée">Proposal Sent</div><div class="stage-desc" data-en="Quote or sample request in review" data-fr="Devis ou demande d'échantillon en révision">Quote or sample request in review</div></div><div class="stage-count"><div class="stage-num">9</div><div class="stage-label" data-en="leads" data-fr="prospects">leads</div></div></div>
+          <div class="pipeline-stage"><div class="stage-color" style="background:#2d6a4f"></div><div class="stage-info"><div class="stage-name" data-en="Negotiation" data-fr="Négociation">Negotiation</div><div class="stage-desc" data-en="Terms being finalized" data-fr="Conditions en cours de finalisation">Terms being finalized</div></div><div class="stage-count"><div class="stage-num">5</div><div class="stage-label" data-en="leads" data-fr="prospects">leads</div></div></div>
+          <div class="pipeline-stage"><div class="stage-color" style="background:#1C2B1E"></div><div class="stage-info"><div class="stage-name" data-en="Deal Closed ✓" data-fr="Contrat signé ✓">Deal Closed ✓</div><div class="stage-desc" data-en="Partnership or order confirmed" data-fr="Partenariat ou commande confirmé">Partnership or order confirmed</div></div><div class="stage-count"><div class="stage-num">31</div><div class="stage-label" data-en="this month" data-fr="ce mois">this month</div></div></div>
+        </div>
+      </div>
+      <div class="pipeline-right">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="pipeline-metric"><div class="pipeline-metric-label" data-en="Pipeline Value" data-fr="Valeur du pipeline">Pipeline Value</div><div class="pipeline-metric-value">$84K</div><div class="pipeline-metric-sub" data-en="↑ Active opportunities" data-fr="↑ Opportunités actives">↑ Active opportunities</div></div>
+          <div class="pipeline-metric"><div class="pipeline-metric-label" data-en="Avg. Close Time" data-fr="Délai moyen de clôture">Avg. Close Time</div><div class="pipeline-metric-value">11<span style="font-size:18px"> days</span></div><div class="pipeline-metric-sub" data-en="↓ 3 days faster than last month" data-fr="↓ 3 jours plus rapide">↓ 3 days faster</div></div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:10px;" data-en="Hot Leads This Week" data-fr="Prospects chauds cette semaine">Hot Leads This Week</div>
+          <div class="pipeline-leads">
+            <div class="lead-item"><div class="lead-avatar">🔬</div><div class="lead-info"><div class="lead-name">DermaCo Labs</div><div class="lead-type" data-en="Lab · Wholesale inquiry · $12K" data-fr="Labo · Demande gros · 12 000 $">Lab · Wholesale inquiry · $12K</div></div><div class="lead-score" style="color:var(--safe)">92</div></div>
+            <div class="lead-item"><div class="lead-avatar">✨</div><div class="lead-info"><div class="lead-name">Éclat Beauté</div><div class="lead-type" data-en="Brand · Private label · $8K" data-fr="Marque · Marque privée · 8 000 $">Brand · Private label · $8K</div></div><div class="lead-score" style="color:var(--sage)">78</div></div>
+            <div class="lead-item"><div class="lead-avatar">🏪</div><div class="lead-info"><div class="lead-name">Studio Lumière</div><div class="lead-type" data-en="Salon · Supplies reorder · $3K" data-fr="Salon · Réassort fournitures · 3 000 $">Salon · Supplies reorder · $3K</div></div><div class="lead-score" style="color:var(--orange)">61</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA -->
+  <section class="cta-section" id="join">
+    <p class="section-label" style="color:var(--sage-light);" data-en="Early Access" data-fr="Accès anticipé">Early Access</p>
+    <h2 class="section-title" style="margin-bottom:18px;"><span data-en="Be the first to" data-fr="Soyez les premiers à">Be the first to</span><br/><em data-en="grow with Gardin." data-fr="grandir avec Gardin.">grow with Gardin.</em></h2>
+    <p class="cta-desc" data-en="We're launching in Canada — bilingual, curated, and built for beauty professionals who mean business." data-fr="Nous lançons au Canada — bilingue, sélectionné, et conçu pour les professionnels de la beauté sérieux.">We're launching in Canada — bilingual, curated, and built for beauty professionals who mean business.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" data-en="Join the Waitlist" data-fr="Rejoindre la liste d'attente">Join the Waitlist</a>
+      <a href="#" class="btn-outline" data-en="For Businesses →" data-fr="Pour les entreprises →">For Businesses →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div><img src="https://base44.app/api/apps/69b3068b64689fd83741a39f/files/public/69b3068b64689fd83741a39f/8057b7d69_213c04079_noBgColor.png" alt="Gardin" class="gardin-footer-logo" /><div class="footer-tagline" data-en="Where Beauty Grows — Canada's Beauty Network" data-fr="Là où la beauté grandit — Le réseau beauté du Canada">Where Beauty Grows — Canada's Beauty Network</div></div>
+      <div class="footer-links">
+        <div class="footer-col"><h5 data-en="Platform" data-fr="Plateforme">Platform</h5><ul>
+          <li><a href="#" data-en="Marketplace" data-fr="Marché">Marketplace</a></li>
+          <li><a href="#" data-en="Community" data-fr="Communauté">Community</a></li>
+          <li><a href="#" data-en="Ingredient Checker" data-fr="Analyseur">Ingredient Checker</a></li>
+          <li><a href="#" data-en="Events" data-fr="Événements">Events</a></li>
+        </ul></div>
+        <div class="footer-col"><h5 data-en="Members" data-fr="Membres">Members</h5><ul>
+          <li><a href="#" data-en="Professionals" data-fr="Professionnels">Professionals</a></li>
+          <li><a href="#" data-en="Suppliers" data-fr="Fournisseurs">Suppliers</a></li>
+          <li><a href="#" data-en="Brands" data-fr="Marques">Brands</a></li>
+          <li><a href="#" data-en="Labs" data-fr="Laboratoires">Labs</a></li>
+        </ul></div>
+        <div class="footer-col"><h5 data-en="Company" data-fr="Entreprise">Company</h5><ul>
+          <li><a href="#" data-en="About" data-fr="À propos">About</a></li>
+          <li><a href="#" data-en="Blog" data-fr="Blogue">Blog</a></li>
+          <li><a href="#" data-en="Contact" data-fr="Contact">Contact</a></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span id="copyright">© 2026 Gardin. All rights reserved.</span><span><a href="#" data-en="Privacy" data-fr="Confidentialité">Privacy</a> · <a href="#" data-en="Terms" data-fr="Conditions">Terms</a></span></div>
+  </footer>
+
+  <script>
+    // ── Language System ─────────────────────────────────────────
+  <script>
+    // ── Language System ─────────────────────────────────────────
+    let currentLang = 'en';
+
+    function setLang(lang, btn) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) el.textContent = text;
+      });
+      const ta = document.getElementById('ingredientInput');
+      const ph = ta.getAttribute('data-placeholder-' + lang);
+      if (ph) ta.placeholder = ph.replace(/\\n/g, '\n');
+      document.getElementById('copyright').textContent = lang === 'fr'
+        ? '© 2026 Gardin. Tous droits réservés.'
+        : '© 2026 Gardin. All rights reserved.';
+      if (document.querySelectorAll('.ingredient-row').length > 0) checkIngredients();
+    }
+
+    // ── Skin Filter ─────────────────────────────────────────────
+    let activeSkin = 'all';
+    function setSkin(skin, btn) {
+      activeSkin = skin;
+      document.querySelectorAll('.skin-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (document.querySelectorAll('.ingredient-row').length > 0) checkIngredients();
+    }
+
+    function clearChecker() {
+      document.getElementById('ingredientInput').value = '';
+      document.getElementById('checkerResults').innerHTML = `<div class="checker-placeholder"><span>🔬</span><p>${currentLang === 'fr' ? "Collez une liste d'ingrédients à gauche, choisissez votre type de peau, puis cliquez sur Analyser." : 'Paste an ingredient list on the left, choose your skin type, and hit Analyze.'}</p></div>`;
+      document.getElementById('checkerSummary').className = 'checker-summary';
+      document.getElementById('checkerSummary').innerHTML = '';
+      document.getElementById('overallScore').className = 'overall-score';
+      document.getElementById('resultsFilter').className = 'results-filter';
+    }
+
+    function filterResults(type, btn) {
+      document.querySelectorAll('.rf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.ingredient-row').forEach(row => {
+        row.classList.toggle('hidden', type !== 'all' && row.dataset.status !== type);
+      });
+    }
+
+    // ── Skin Compatibility ──────────────────────────────────────
+    const SKIN_NOTES = {
+      dry: {
+        good: ['glycerin','hyaluronic acid','sodium hyaluronate','shea butter','squalane','ceramide','ceramides','panthenol','aloe vera','aloe barbadensis','jojoba oil','argan oil','collagen','lanolin','beeswax','avocado oil','marula oil','polyglutamic acid','beta glucan','oat extract'],
+        warn: ['alcohol denat','denatured alcohol','isopropyl alcohol','salicylic acid','glycolic acid','sodium lauryl sulfate','sls','ethanol','retinol','benzoyl peroxide','kaolin','bentonite','charcoal']
+      },
+      oily: {
+        good: ['niacinamide','salicylic acid','glycolic acid','lactic acid','zinc oxide','retinol','hyaluronic acid','sodium hyaluronate','aloe vera','glycerin','azelaic acid','kaolin','bentonite','charcoal','caffeine','alpha arbutin'],
+        warn: ['shea butter','lanolin','beeswax','mineral oil','isopropyl alcohol','argan oil','avocado oil','dimethicone','petrolatum']
+      },
+      sensitive: {
+        good: ['aloe vera','aloe barbadensis','allantoin','panthenol','ceramide','ceramides','glycerin','zinc oxide','shea butter','squalane','centella asiatica','madecassoside','oat extract','beta glucan','ectoin','bakuchiol','azelaic acid','tranexamic acid'],
+        warn: ['fragrance','parfum','alcohol denat','denatured alcohol','retinol','glycolic acid','salicylic acid','lactic acid','sodium lauryl sulfate','sls','limonene','linalool','cinnamal','geraniol','eugenol','phenoxyethanol','methylparaben','propylparaben','butylparaben','menthol','tea tree oil','essential oils','benzoyl peroxide','kojic acid']
+      },
+      combination: {
+        good: ['niacinamide','hyaluronic acid','sodium hyaluronate','glycerin','salicylic acid','lactic acid','aloe vera','squalane','azelaic acid','centella asiatica','caffeine'],
+        warn: ['shea butter','lanolin','mineral oil','alcohol denat','petrolatum']
+      },
+      mature: {
+        good: ['retinol','retinyl palmitate','peptides','collagen','hyaluronic acid','sodium hyaluronate','vitamin c','ascorbic acid','niacinamide','ceramide','ceramides','squalane','glycerin','shea butter','tocopherol','resveratrol','coenzyme q10','bakuchiol','polyglutamic acid','alpha arbutin','tranexamic acid','avocado oil'],
+        warn: ['alcohol denat','denatured alcohol','sodium lauryl sulfate','sls','fragrance','parfum','isopropyl alcohol']
+      }
+    };
+
+    // ── UI Translations ─────────────────────────────────────────
+    const T = {
+      safe:     { en: '✓ Safe',       fr: '✓ Sûr' },
+      caution:  { en: '⚠ Caution',    fr: '⚠ Attention' },
+      flag:     { en: '✕ Flag',       fr: '✕ Signalé' },
+      vegan:    { en: '🌱 Vegan',     fr: '🌱 Végan' },
+      nonvegan: { en: '🚫 Non-Vegan', fr: '🚫 Non-végan' },
+      unknown:  { en: '? Unknown',    fr: '? Inconnu' },
+      foryou:   { en: '✓ For You',    fr: '✓ Pour vous' },
+      avoid:    { en: '⚠ Avoid',      fr: '⚠ Éviter' },
+      notfound: {
+        en: 'Not found in our database. May be a trade name, INCI variant, or rare ingredient.',
+        fr: 'Non trouvé dans notre base de données. Peut être un nom commercial, une variante INCI ou un ingrédient rare.'
+      },
+      scorelabel: { en: 'Safety Score:', fr: 'Score de sécurité :' },
+      warnNote: {
+        en: s => `⚠ Not ideal for ${s} skin — may cause dryness or irritation.`,
+        fr: s => `⚠ Pas idéal pour la peau ${({dry:'sèche',oily:'grasse',sensitive:'sensible',combination:'mixte',mature:'mature'})[s]} — peut causer sécheresse ou irritation.`
+      },
+      goodNote: {
+        en: s => `✓ Great for ${s} skin.`,
+        fr: s => `✓ Excellent pour la peau ${({dry:'sèche',oily:'grasse',sensitive:'sensible',combination:'mixte',mature:'mature'})[s]}.`
+      },
+    };
+
+    // ── Ingredient Database (EN + FR) ───────────────────────────
+    const INGREDIENTS = {
+      "aqua":                  { status:"safe",    vegan:true,  fn:{en:"Solvent",fr:"Solvant"}, desc:{en:"Water — the most common cosmetic base ingredient.",fr:"Eau — l'ingrédient de base cosmétique le plus courant."} },
+      "water":                 { status:"safe",    vegan:true,  fn:{en:"Solvent",fr:"Solvant"}, desc:{en:"Water — the universal solvent for most formulas.",fr:"Eau — le solvant universel pour la plupart des formules."} },
+      "glycerin":              { status:"safe",    vegan:true,  fn:{en:"Humectant",fr:"Humectant"}, desc:{en:"Draws moisture into the skin. Keeps skin hydrated and plump. Usually plant-derived.",fr:"Attire l'humidité dans la peau. Garde la peau hydratée et rebondie. Généralement d'origine végétale."} },
+      "glycerine":             { status:"safe",    vegan:true,  fn:{en:"Humectant",fr:"Humectant"}, desc:{en:"Draws moisture into the skin. Keeps skin hydrated and plump.",fr:"Attire l'humidité dans la peau. Garde la peau hydratée et rebondie."} },
+      "niacinamide":           { status:"safe",    vegan:true,  fn:{en:"Active / Vitamin B3",fr:"Actif / Vitamine B3"}, desc:{en:"Reduces pores, brightens skin tone, controls oil, and strengthens the skin barrier.",fr:"Réduit les pores, illumine le teint, contrôle le sébum et renforce la barrière cutanée."} },
+      "hyaluronic acid":       { status:"safe",    vegan:true,  fn:{en:"Humectant",fr:"Humectant"}, desc:{en:"Holds up to 1000x its weight in water. Exceptional hydration without clogging pores.",fr:"Retient jusqu'à 1000 fois son poids en eau. Hydratation exceptionnelle sans obstruer les pores."} },
+      "sodium hyaluronate":    { status:"safe",    vegan:true,  fn:{en:"Humectant",fr:"Humectant"}, desc:{en:"Smaller form of hyaluronic acid that penetrates deeper for intensive hydration.",fr:"Forme plus petite de l'acide hyaluronique qui pénètre plus profondément pour une hydratation intensive."} },
+      "tocopherol":            { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Vitamin E",fr:"Antioxydant / Vitamine E"}, desc:{en:"Protects skin from free radical damage. Acts as a preservative and skin conditioner.",fr:"Protège la peau des dommages des radicaux libres. Agit comme conservateur et conditionneur cutané."} },
+      "vitamin e":             { status:"safe",    vegan:true,  fn:{en:"Antioxidant",fr:"Antioxydant"}, desc:{en:"Protects and nourishes skin. Helps with healing and moisture retention.",fr:"Protège et nourrit la peau. Aide à la cicatrisation et à la rétention d'humidité."} },
+      "retinol":               { status:"caution", vegan:true,  fn:{en:"Active / Vitamin A",fr:"Actif / Vitamine A"}, desc:{en:"Powerful anti-aging ingredient. Increases cell turnover. Can cause irritation and sun sensitivity. Start low.",fr:"Ingrédient anti-âge puissant. Accélère le renouvellement cellulaire. Peut causer irritation et sensibilité au soleil. Commencer doucement."} },
+      "retinyl palmitate":     { status:"caution", vegan:true,  fn:{en:"Active / Vitamin A",fr:"Actif / Vitamine A"}, desc:{en:"Milder form of vitamin A. Less irritating than retinol. Effective for anti-aging.",fr:"Forme plus douce de la vitamine A. Moins irritante que le rétinol. Efficace contre le vieillissement."} },
+      "aloe vera":             { status:"safe",    vegan:true,  fn:{en:"Soothing / Humectant",fr:"Apaisant / Humectant"}, desc:{en:"Calms irritation, hydrates, and soothes. Great for sensitive and sunburned skin.",fr:"Apaise l'irritation, hydrate et soulage. Idéal pour les peaux sensibles et après-soleil."} },
+      "aloe barbadensis":      { status:"safe",    vegan:true,  fn:{en:"Soothing / Humectant",fr:"Apaisant / Humectant"}, desc:{en:"Aloe vera — calms, hydrates, and soothes sensitive skin.",fr:"Aloe vera — apaise, hydrate et soulage les peaux sensibles."} },
+      "ceramide":              { status:"safe",    vegan:true,  fn:{en:"Barrier Repair",fr:"Réparation de barrière"}, desc:{en:"Strengthens the skin barrier, locks in moisture, prevents transepidermal water loss.",fr:"Renforce la barrière cutanée, retient l'humidité, prévient la perte d'eau transépidermique."} },
+      "ceramides":             { status:"safe",    vegan:true,  fn:{en:"Barrier Repair",fr:"Réparation de barrière"}, desc:{en:"Strengthens the skin barrier and helps retain moisture.",fr:"Renforce la barrière cutanée et aide à retenir l'humidité."} },
+      "peptides":              { status:"safe",    vegan:true,  fn:{en:"Anti-aging / Firming",fr:"Anti-âge / Raffermissant"}, desc:{en:"Signal the skin to produce more collagen. Reduces fine lines and improves firmness.",fr:"Signalent à la peau de produire plus de collagène. Réduit les rides et améliore la fermeté."} },
+      "collagen":              { status:"safe",    vegan:false, fn:{en:"Anti-aging / Moisturizing",fr:"Anti-âge / Hydratant"}, desc:{en:"Hydrates and firms skin. Usually animal-derived (fish or bovine). Vegan versions are less common.",fr:"Hydrate et raffermit la peau. Généralement d'origine animale (poisson ou bovin). Les versions véganes existent mais sont rares."} },
+      "squalane":              { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Lightweight, non-comedogenic. Usually plant-derived (olive or sugarcane). Mimics skin's natural oils.",fr:"Léger, non comédogène. Généralement d'origine végétale (olive ou canne à sucre). Imite les huiles naturelles de la peau."} },
+      "squalene":              { status:"safe",    vegan:false, fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Can be shark-derived — not vegan. Look for 'squalane' (plant-based alternative).",fr:"Peut être dérivé du requin — non végan. Préférez le 'squalane' (alternative végétale)."} },
+      "jojoba oil":            { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"A wax ester similar to skin's sebum. Balancing, non-comedogenic, great for most skin types.",fr:"Un ester de cire similaire au sébum. Équilibrant, non comédogène, adapté à la plupart des types de peau."} },
+      "rosehip oil":           { status:"safe",    vegan:true,  fn:{en:"Emollient / Active",fr:"Émollient / Actif"}, desc:{en:"Rich in vitamin C and fatty acids. Brightening, anti-aging, ideal for dry skin.",fr:"Riche en vitamine C et acides gras. Éclairant, anti-âge, idéal pour les peaux sèches."} },
+      "argan oil":             { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Rich in vitamin E and fatty acids. Nourishes and softens. Can be heavy for oily skin.",fr:"Riche en vitamine E et acides gras. Nourrit et adoucit. Peut être lourd pour les peaux grasses."} },
+      "vitamin c":             { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Brightening",fr:"Antioxydant / Éclairant"}, desc:{en:"Brightens skin, fades hyperpigmentation, boosts collagen. Look for stabilized forms.",fr:"Illumine la peau, atténue l'hyperpigmentation, stimule le collagène. Préférez les formes stabilisées."} },
+      "ascorbic acid":         { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Brightening",fr:"Antioxydant / Éclairant"}, desc:{en:"Pure vitamin C. Highly effective but can be irritating at high concentrations.",fr:"Vitamine C pure. Très efficace mais peut irriter à forte concentration."} },
+      "salicylic acid":        { status:"caution", vegan:true,  fn:{en:"Exfoliant / BHA",fr:"Exfoliant / BHA"}, desc:{en:"Oil-soluble acid that penetrates pores to clear blackheads and acne. Can be drying.",fr:"Acide liposoluble qui pénètre les pores pour éliminer points noirs et acné. Peut assécher."} },
+      "lactic acid":           { status:"caution", vegan:true,  fn:{en:"Exfoliant / AHA",fr:"Exfoliant / AHA"}, desc:{en:"Gently exfoliates and brightens. Milder than glycolic. Increases sun sensitivity.",fr:"Exfolie doucement et illumine. Plus doux que l'acide glycolique. Augmente la sensibilité au soleil."} },
+      "glycolic acid":         { status:"caution", vegan:true,  fn:{en:"Exfoliant / AHA",fr:"Exfoliant / AHA"}, desc:{en:"Strongest AHA — deeply exfoliates and brightens. Can cause sensitivity. Always use SPF.",fr:"L'AHA le plus puissant — exfolie en profondeur et illumine. Peut causer de la sensibilité. Toujours utiliser un SPF."} },
+      "mandelic acid":         { status:"caution", vegan:true,  fn:{en:"Exfoliant / AHA",fr:"Exfoliant / AHA"}, desc:{en:"Gentle AHA from almonds. Good for sensitive skin and hyperpigmentation.",fr:"AHA doux extrait d'amandes. Bon pour les peaux sensibles et l'hyperpigmentation."} },
+      "azelaic acid":          { status:"safe",    vegan:true,  fn:{en:"Active / Brightening",fr:"Actif / Éclairant"}, desc:{en:"Reduces redness, brightens, fights acne. Gentle for sensitive and rosacea-prone skin.",fr:"Réduit la rougeur, illumine, combat l'acné. Doux pour les peaux sensibles et sujettes à la rosacée."} },
+      "citric acid":           { status:"safe",    vegan:true,  fn:{en:"pH Adjuster / Exfoliant",fr:"Régulateur de pH / Exfoliant"}, desc:{en:"Adjusts pH and mildly exfoliates. Also acts as a natural preservative.",fr:"Ajuste le pH et exfolie légèrement. Agit aussi comme conservateur naturel."} },
+      "zinc oxide":            { status:"safe",    vegan:true,  fn:{en:"Sunscreen / Anti-inflammatory",fr:"Écran solaire / Anti-inflammatoire"}, desc:{en:"Mineral sunscreen. Broad spectrum UVA/UVB. Non-irritating, safe for sensitive skin.",fr:"Filtre solaire minéral. Spectre large UVA/UVB. Non irritant, sûr pour les peaux sensibles."} },
+      "titanium dioxide":      { status:"safe",    vegan:true,  fn:{en:"Sunscreen / Opacifier",fr:"Écran solaire / Opacifiant"}, desc:{en:"Mineral sunscreen and pigment. Broad spectrum UV protection. Non-irritating.",fr:"Filtre solaire minéral et pigment. Protection UV large spectre. Non irritant."} },
+      "shea butter":           { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Rich, deeply moisturizing. Excellent for dry skin. Can be heavy for oily types.",fr:"Riche et profondément hydratant. Excellent pour les peaux sèches. Peut être lourd pour les peaux grasses."} },
+      "panthenol":             { status:"safe",    vegan:true,  fn:{en:"Humectant / Soothing",fr:"Humectant / Apaisant"}, desc:{en:"Provitamin B5. Deeply hydrating, soothing, promotes healing.",fr:"Provitamine B5. Profondément hydratant, apaisant, favorise la cicatrisation."} },
+      "allantoin":             { status:"safe",    vegan:true,  fn:{en:"Soothing / Healing",fr:"Apaisant / Cicatrisant"}, desc:{en:"Calms irritation, promotes cell regeneration, softens skin. Very gentle.",fr:"Apaise l'irritation, favorise la régénération cellulaire, adoucit la peau. Très doux."} },
+      "dimethicone":           { status:"safe",    vegan:true,  fn:{en:"Silicone / Emollient",fr:"Silicone / Émollient"}, desc:{en:"Silky texture, forms a protective barrier. May trap debris in pores for acne-prone skin.",fr:"Texture soyeuse, forme une barrière protectrice. Peut piéger les impuretés dans les pores des peaux acnéiques."} },
+      "cyclomethicone":        { status:"caution", vegan:true,  fn:{en:"Silicone / Emollient",fr:"Silicone / Émollient"}, desc:{en:"Lightweight silicone. Some environmental concerns regarding biodegradability.",fr:"Silicone léger. Préoccupations environnementales concernant sa biodégradabilité."} },
+      "xanthan gum":           { status:"safe",    vegan:true,  fn:{en:"Thickener / Stabilizer",fr:"Épaississant / Stabilisant"}, desc:{en:"Natural thickener from fermentation. Gives products their gel-like texture.",fr:"Épaississant naturel issu de la fermentation. Donne aux produits leur texture gel."} },
+      "carbomer":              { status:"safe",    vegan:true,  fn:{en:"Thickener / Gelling Agent",fr:"Épaississant / Gélifiant"}, desc:{en:"Synthetic polymer used to thicken gels and creams. Generally well-tolerated.",fr:"Polymère synthétique utilisé pour épaissir gels et crèmes. Généralement bien toléré."} },
+      "mineral oil":           { status:"caution", vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Petroleum-derived. Occlusive barrier. Can be comedogenic for acne-prone skin.",fr:"Dérivé du pétrole. Barrière occlusive. Peut être comédogène pour les peaux acnéiques."} },
+      "petrolatum":            { status:"caution", vegan:true,  fn:{en:"Occlusive",fr:"Occlusif"}, desc:{en:"Petroleum jelly. Locks in moisture but doesn't add it. Can clog pores.",fr:"Vaseline. Scelle l'humidité sans l'apporter. Peut obstruer les pores."} },
+      "kaolin":                { status:"safe",    vegan:true,  fn:{en:"Absorbent / Clay",fr:"Absorbant / Argile"}, desc:{en:"White clay. Absorbs excess oil. Best for oily skin. Can be drying for dry types.",fr:"Argile blanche. Absorbe l'excès de sébum. Idéale pour les peaux grasses. Peut assécher les peaux sèches."} },
+      "bentonite":             { status:"safe",    vegan:true,  fn:{en:"Absorbent / Clay",fr:"Absorbant / Argile"}, desc:{en:"Clay mineral. Draws out impurities. Best for oily and acne-prone skin.",fr:"Argile minérale. Extrait les impuretés. Idéale pour les peaux grasses et acnéiques."} },
+      "charcoal":              { status:"safe",    vegan:true,  fn:{en:"Detoxifier / Absorbent",fr:"Détoxifiant / Absorbant"}, desc:{en:"Activated charcoal. Draws impurities from pores. Better for oily skin types.",fr:"Charbon actif. Extrait les impuretés des pores. Mieux adapté aux peaux grasses."} },
+      "caffeine":              { status:"safe",    vegan:true,  fn:{en:"De-puffing / Antioxidant",fr:"Décongestionnant / Antioxydant"}, desc:{en:"Reduces puffiness and dark circles. Antioxidant. Great in eye creams.",fr:"Réduit les poches et cernes. Antioxydant. Excellent dans les crèmes pour les yeux."} },
+      "green tea extract":     { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Soothing",fr:"Antioxydant / Apaisant"}, desc:{en:"Rich in EGCG antioxidants. Calms redness and protects from environmental damage.",fr:"Riche en antioxydants EGCG. Apaise les rougeurs et protège des agressions environnementales."} },
+      "centella asiatica":     { status:"safe",    vegan:true,  fn:{en:"Soothing / Healing",fr:"Apaisant / Cicatrisant"}, desc:{en:"Also called cica. Deeply soothing, promotes skin healing. Excellent for sensitive skin.",fr:"Aussi appelée cica. Profondément apaisante, favorise la cicatrisation. Excellente pour les peaux sensibles."} },
+      "madecassoside":         { status:"safe",    vegan:true,  fn:{en:"Soothing / Healing",fr:"Apaisant / Cicatrisant"}, desc:{en:"Active compound from centella. Reduces inflammation and supports skin repair.",fr:"Composé actif de centella. Réduit l'inflammation et favorise la réparation cutanée."} },
+      "kojic acid":            { status:"caution", vegan:true,  fn:{en:"Brightening",fr:"Éclairant"}, desc:{en:"Inhibits melanin to fade dark spots. Can be irritating. Caution on sensitive skin.",fr:"Inhibe la mélanine pour atténuer les taches sombres. Peut irriter. Prudence sur les peaux sensibles."} },
+      "alpha arbutin":         { status:"safe",    vegan:true,  fn:{en:"Brightening",fr:"Éclairant"}, desc:{en:"Gentle brightener. Fades hyperpigmentation without the irritation of kojic acid.",fr:"Éclairant doux. Atténue l'hyperpigmentation sans l'irritation de l'acide kojique."} },
+      "tranexamic acid":       { status:"safe",    vegan:true,  fn:{en:"Brightening",fr:"Éclairant"}, desc:{en:"Fades dark spots and melasma. Gentle and well-tolerated by sensitive skin.",fr:"Atténue les taches et le mélasma. Doux et bien toléré par les peaux sensibles."} },
+      "benzoyl peroxide":      { status:"caution", vegan:true,  fn:{en:"Antibacterial / Acne",fr:"Antibactérien / Anti-acné"}, desc:{en:"Kills acne bacteria. Effective but can bleach fabrics and cause dryness. Start at 2.5%.",fr:"Élimine les bactéries de l'acné. Efficace mais peut décolorer les tissus et assécher. Commencer à 2,5%."} },
+      "tea tree oil":          { status:"caution", vegan:true,  fn:{en:"Antibacterial / Acne",fr:"Antibactérien / Anti-acné"}, desc:{en:"Natural antibacterial effective against acne. Can irritate sensitive skin. Dilute properly.",fr:"Antibactérien naturel efficace contre l'acné. Peut irriter les peaux sensibles. Diluer correctement."} },
+      "resveratrol":           { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Anti-aging",fr:"Antioxydant / Anti-âge"}, desc:{en:"Powerful antioxidant from grape skin. Fights free radicals and supports collagen.",fr:"Puissant antioxydant extrait de la peau de raisin. Combat les radicaux libres et soutient le collagène."} },
+      "coenzyme q10":          { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Anti-aging",fr:"Antioxydant / Anti-âge"}, desc:{en:"CoQ10. Energizes skin cells and fights oxidative stress. Great for mature skin.",fr:"CoQ10. Énergise les cellules cutanées et combat le stress oxydatif. Idéal pour les peaux matures."} },
+      "bakuchiol":             { status:"safe",    vegan:true,  fn:{en:"Plant Retinol Alternative",fr:"Alternative végétale au rétinol"}, desc:{en:"Plant-based retinol alternative. Similar anti-aging benefits without the irritation.",fr:"Alternative végétale au rétinol. Bénéfices anti-âge similaires sans l'irritation."} },
+      "oat extract":           { status:"safe",    vegan:true,  fn:{en:"Soothing / Anti-itch",fr:"Apaisant / Anti-démangeaisons"}, desc:{en:"Colloidal oat. Calms inflammation and itching. Ideal for sensitive and eczema-prone skin.",fr:"Avoine colloïdale. Apaise l'inflammation et les démangeaisons. Idéal pour peaux sensibles et sujettes à l'eczéma."} },
+      "avocado oil":           { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Rich in oleic acid and vitamins. Very nourishing for dry and mature skin.",fr:"Riche en acide oléique et vitamines. Très nourrissant pour les peaux sèches et matures."} },
+      "marula oil":            { status:"safe",    vegan:true,  fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Lightweight oil rich in oleic acid. Absorbs quickly. Nourishing without being heavy.",fr:"Huile légère riche en acide oléique. Absorbe rapidement. Nourrissante sans être lourde."} },
+      "polyglutamic acid":     { status:"safe",    vegan:true,  fn:{en:"Humectant",fr:"Humectant"}, desc:{en:"Holds more moisture than hyaluronic acid. Forms a moisture-locking film on skin.",fr:"Retient plus d'humidité que l'acide hyaluronique. Forme un film retenteur d'humidité sur la peau."} },
+      "beta glucan":           { status:"safe",    vegan:true,  fn:{en:"Humectant / Soothing",fr:"Humectant / Apaisant"}, desc:{en:"From oats or yeast. Deeply hydrating and calming. Supports skin barrier repair.",fr:"Issu de l'avoine ou de la levure. Profondément hydratant et apaisant. Soutient la réparation de la barrière cutanée."} },
+      "ectoin":                { status:"safe",    vegan:true,  fn:{en:"Protective / Soothing",fr:"Protecteur / Apaisant"}, desc:{en:"Protects skin cells from environmental stressors. Excellent for sensitive skin.",fr:"Protège les cellules cutanées des agressions environnementales. Excellent pour les peaux sensibles."} },
+      "sea buckthorn":         { status:"safe",    vegan:true,  fn:{en:"Antioxidant / Nourishing",fr:"Antioxydant / Nourrissant"}, desc:{en:"Rich in omega fatty acids and vitamin C. Deeply nourishing for dry and mature skin.",fr:"Riche en oméga et vitamine C. Profondément nourrissant pour les peaux sèches et matures."} },
+      "fragrance":             { status:"caution", vegan:true,  fn:{en:"Fragrance",fr:"Parfum"}, desc:{en:"Blanket term hiding potentially hundreds of undisclosed chemicals. Common allergen.",fr:"Terme générique cachant potentiellement des centaines de produits chimiques non divulgués. Allergène courant."} },
+      "parfum":                { status:"caution", vegan:true,  fn:{en:"Fragrance",fr:"Parfum"}, desc:{en:"European term for fragrance. Can mask many undisclosed allergens. Avoid with sensitive skin.",fr:"Terme européen pour le parfum. Peut masquer de nombreux allergènes. Éviter sur les peaux sensibles."} },
+      "limonene":              { status:"caution", vegan:true,  fn:{en:"Fragrance Component",fr:"Composant parfumant"}, desc:{en:"Citrus-derived fragrance. A known allergen — can cause skin sensitization.",fr:"Parfum dérivé des agrumes. Allergène connu — peut provoquer une sensibilisation cutanée."} },
+      "linalool":              { status:"caution", vegan:true,  fn:{en:"Fragrance Component",fr:"Composant parfumant"}, desc:{en:"Fragrance component. Can oxidize and become a sensitizer. Frequently flagged by dermatologists.",fr:"Composant parfumant. Peut s'oxyder et devenir sensibilisant. Fréquemment signalé par les dermatologues."} },
+      "cinnamal":              { status:"caution", vegan:true,  fn:{en:"Fragrance Component",fr:"Composant parfumant"}, desc:{en:"Cinnamon-derived allergen. One of the most common contact allergens in cosmetics.",fr:"Allergène dérivé de la cannelle. L'un des allergènes de contact les plus courants en cosmétique."} },
+      "geraniol":              { status:"caution", vegan:true,  fn:{en:"Fragrance Component",fr:"Composant parfumant"}, desc:{en:"Fragrance from rose and geranium oil. Known allergen for some people.",fr:"Parfum issu de la rose et du géranium. Allergène connu pour certaines personnes."} },
+      "eugenol":               { status:"caution", vegan:true,  fn:{en:"Fragrance Component",fr:"Composant parfumant"}, desc:{en:"Clove oil component. Allergen and potential sensitizer. Frequently causes contact dermatitis.",fr:"Composant de l'huile de clou de girofle. Allergène et sensibilisant potentiel. Cause fréquemment des dermatites de contact."} },
+      "menthol":               { status:"caution", vegan:true,  fn:{en:"Cooling Agent / Fragrance",fr:"Agent rafraîchissant / Parfum"}, desc:{en:"Provides cooling sensation. Can irritate sensitive skin and eyes.",fr:"Procure une sensation de fraîcheur. Peut irriter les peaux sensibles et les yeux."} },
+      "essential oils":        { status:"caution", vegan:true,  fn:{en:"Fragrance / Active",fr:"Parfum / Actif"}, desc:{en:"Can be beneficial but are common irritants for sensitive skin. Always patch test.",fr:"Peuvent être bénéfiques mais irritants courants pour les peaux sensibles. Toujours faire un test cutané."} },
+      "alcohol denat":         { status:"caution", vegan:true,  fn:{en:"Solvent / Preservative",fr:"Solvant / Conservateur"}, desc:{en:"Denatured alcohol. Can be drying and irritating. Strips the skin's moisture barrier.",fr:"Alcool dénaturé. Peut assécher et irriter. Détruit la barrière hydratante de la peau."} },
+      "denatured alcohol":     { status:"caution", vegan:true,  fn:{en:"Solvent",fr:"Solvant"}, desc:{en:"Strips the skin's moisture barrier over time. Common in toners and astringents.",fr:"Détruit la barrière hydratante de la peau à long terme. Courant dans les toniques et astringents."} },
+      "isopropyl alcohol":     { status:"caution", vegan:true,  fn:{en:"Solvent",fr:"Solvant"}, desc:{en:"Can be irritating and drying. Not ideal for sensitive or dry skin.",fr:"Peut être irritant et asséchant. Déconseillé pour les peaux sensibles ou sèches."} },
+      "ethanol":               { status:"caution", vegan:true,  fn:{en:"Solvent / Preservative",fr:"Solvant / Conservateur"}, desc:{en:"Alcohol that can dry out skin. Usually fine in small amounts.",fr:"Alcool qui peut assécher la peau. Généralement sans risque en petites quantités."} },
+      "phenoxyethanol":        { status:"caution", vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Common preservative. Generally safe under 1% but can irritate sensitive skin.",fr:"Conservateur courant. Généralement sûr sous 1% mais peut irriter les peaux sensibles."} },
+      "benzyl alcohol":        { status:"caution", vegan:true,  fn:{en:"Preservative / Fragrance",fr:"Conservateur / Parfum"}, desc:{en:"Can be a skin sensitizer. Also used as a fragrance component.",fr:"Peut être un sensibilisant cutané. Aussi utilisé comme composant parfumant."} },
+      "methylisothiazolinone": { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Potent allergen. Banned in EU leave-on products. Causes contact dermatitis.",fr:"Allergène puissant. Interdit dans les produits sans rinçage en Europe. Cause des dermatites de contact."} },
+      "methylchloroisothiazolinone": { status:"flag", vegan:true, fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Highly allergenic. Often combined with methylisothiazolinone. Banned in EU leave-on products.",fr:"Très allergénique. Souvent combiné avec le méthylisothiazolinone. Interdit dans les produits sans rinçage en Europe."} },
+      "sodium lauryl sulfate": { status:"flag",    vegan:true,  fn:{en:"Surfactant / Foaming",fr:"Tensioactif / Moussant"}, desc:{en:"Harsh detergent that strips skin's natural oils. Linked to irritation and sensitization.",fr:"Détergent agressif qui élimine les huiles naturelles de la peau. Lié à l'irritation et la sensibilisation."} },
+      "sls":                   { status:"flag",    vegan:true,  fn:{en:"Surfactant",fr:"Tensioactif"}, desc:{en:"Sodium Lauryl Sulfate — harsh foaming agent. Best avoided in leave-on products.",fr:"Sodium Lauryl Sulfate — agent moussant agressif. Mieux éviter dans les produits sans rinçage."} },
+      "sodium laureth sulfate":{ status:"caution", vegan:true,  fn:{en:"Surfactant / Foaming",fr:"Tensioactif / Moussant"}, desc:{en:"Milder than SLS but still potentially irritating. May be contaminated with 1,4-dioxane.",fr:"Plus doux que le SLS mais encore potentiellement irritant. Peut être contaminé par le 1,4-dioxane."} },
+      "sles":                  { status:"caution", vegan:true,  fn:{en:"Surfactant",fr:"Tensioactif"}, desc:{en:"Gentler than SLS but worth limiting in leave-on products.",fr:"Plus doux que le SLS mais à limiter dans les produits sans rinçage."} },
+      "parabens":              { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Endocrine disruptors. Mimic estrogen. Avoid: methyl, propyl, butylparaben.",fr:"Perturbateurs endocriniens. Imitent les œstrogènes. Éviter : méthyl, propyl, butylparabène."} },
+      "methylparaben":         { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Endocrine disruptor. Mimics estrogen and may interfere with hormone function.",fr:"Perturbateur endocrinien. Imite les œstrogènes et peut perturber la fonction hormonale."} },
+      "propylparaben":         { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Endocrine disruptor. Linked to hormonal disruption and breast tissue concerns.",fr:"Perturbateur endocrinien. Lié à des perturbations hormonales et des préoccupations sur les tissus mammaires."} },
+      "butylparaben":          { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Strongest endocrine-disrupting paraben. Avoid in all products.",fr:"Le parabène perturbateur endocrinien le plus puissant. Éviter dans tous les produits."} },
+      "ethylparaben":          { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Paraben preservative. Endocrine disruption concerns.",fr:"Conservateur parabène. Préoccupations de perturbation endocrinienne."} },
+      "formaldehyde":          { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Known carcinogen. Banned in EU cosmetics. Potent allergen.",fr:"Cancérigène connu. Interdit dans les cosmétiques en Europe. Allergène puissant."} },
+      "dmdm hydantoin":        { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Formaldehyde releaser. Linked to hair loss and allergic reactions.",fr:"Libérateur de formaldéhyde. Lié à la perte de cheveux et aux réactions allergiques."} },
+      "imidazolidinyl urea":   { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Formaldehyde-releasing preservative. Causes contact dermatitis.",fr:"Conservateur libérateur de formaldéhyde. Cause des dermatites de contact."} },
+      "diazolidinyl urea":     { status:"flag",    vegan:true,  fn:{en:"Preservative",fr:"Conservateur"}, desc:{en:"Formaldehyde releaser and potent allergen.",fr:"Libérateur de formaldéhyde et allergène puissant."} },
+      "phthalates":            { status:"flag",    vegan:true,  fn:{en:"Plasticizer / Fragrance",fr:"Plastifiant / Parfum"}, desc:{en:"Endocrine disruptors often hidden under 'fragrance'. Linked to reproductive harm.",fr:"Perturbateurs endocriniens souvent cachés sous 'parfum'. Liés à des dommages reproductifs."} },
+      "dibutyl phthalate":     { status:"flag",    vegan:true,  fn:{en:"Plasticizer",fr:"Plastifiant"}, desc:{en:"Phthalate — endocrine disruptor. Banned in EU cosmetics. Common in nail polish.",fr:"Phtalate — perturbateur endocrinien. Interdit dans les cosmétiques en Europe. Courant dans le vernis à ongles."} },
+      "triclosan":             { status:"flag",    vegan:true,  fn:{en:"Antibacterial",fr:"Antibactérien"}, desc:{en:"Endocrine disruptor and environmental contaminant. May contribute to antibiotic resistance.",fr:"Perturbateur endocrinien et contaminant environnemental. Peut contribuer à la résistance aux antibiotiques."} },
+      "oxybenzone":            { status:"flag",    vegan:true,  fn:{en:"Chemical Sunscreen",fr:"Filtre solaire chimique"}, desc:{en:"Potential endocrine disruptor. Penetrates skin. Harmful to coral reefs.",fr:"Perturbateur endocrinien potentiel. Pénètre la peau. Nocif pour les récifs coralliens."} },
+      "octinoxate":            { status:"flag",    vegan:true,  fn:{en:"Chemical Sunscreen",fr:"Filtre solaire chimique"}, desc:{en:"Chemical UV filter. Potential endocrine disruptor. Harmful to coral reefs.",fr:"Filtre UV chimique. Perturbateur endocrinien potentiel. Nocif pour les récifs coralliens."} },
+      "hydroquinone":          { status:"flag",    vegan:true,  fn:{en:"Skin Lightener",fr:"Dépigmentant"}, desc:{en:"Strong lightener. Linked to ochronosis with overuse. Restricted in EU.",fr:"Dépigmentant puissant. Lié à l'ochrose en cas d'usage excessif. Restreint en Europe."} },
+      "polyacrylamide":        { status:"flag",    vegan:true,  fn:{en:"Thickener / Film Former",fr:"Épaississant / Agent filmogène"}, desc:{en:"May contain residual acrylamide — a known carcinogen. Restricted in EU.",fr:"Peut contenir de l'acrylamide résiduel — un cancérigène connu. Restreint en Europe."} },
+      "talc":                  { status:"caution", vegan:true,  fn:{en:"Absorbent / Filler",fr:"Absorbant / Charge"}, desc:{en:"Can be contaminated with asbestos if not purified. Avoid in loose powders.",fr:"Peut être contaminé par de l'amiante si non purifié. Éviter dans les poudres libres."} },
+      "beeswax":               { status:"safe",    vegan:false, fn:{en:"Emollient / Thickener",fr:"Émollient / Épaississant"}, desc:{en:"Natural wax from honeybees. Not vegan. Creates a protective, moisturizing barrier.",fr:"Cire naturelle d'abeilles. Non végane. Crée une barrière protectrice et hydratante."} },
+      "cera alba":             { status:"safe",    vegan:false, fn:{en:"Emollient / Thickener",fr:"Émollient / Épaississant"}, desc:{en:"Beeswax — not vegan. Protective and moisturizing barrier.",fr:"Cire d'abeille — non végane. Barrière protectrice et hydratante."} },
+      "lanolin":               { status:"safe",    vegan:false, fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"From sheep's wool. Not vegan. Highly effective moisturizer.",fr:"Issu de la laine de mouton. Non végane. Hydratant très efficace."} },
+      "carmine":               { status:"safe",    vegan:false, fn:{en:"Colorant",fr:"Colorant"}, desc:{en:"Red pigment from crushed cochineal insects. Not vegan. Used in lipsticks and blushes.",fr:"Pigment rouge issu d'insectes cochenilles broyés. Non végane. Utilisé dans les rouges à lèvres et fards."} },
+      "ci 75470":              { status:"safe",    vegan:false, fn:{en:"Colorant",fr:"Colorant"}, desc:{en:"Carmine — red pigment from insects. Not vegan.",fr:"Carmin — pigment rouge d'origine insecte. Non végane."} },
+      "shellac":               { status:"safe",    vegan:false, fn:{en:"Film Former / Gloss",fr:"Agent filmogène / Brillant"}, desc:{en:"Secretion from lac bugs. Not vegan. Used in nail polishes for shine.",fr:"Sécrétion de cochenilles. Non végane. Utilisé dans les vernis à ongles pour le brillant."} },
+      "keratin":               { status:"safe",    vegan:false, fn:{en:"Protein / Hair Treatment",fr:"Protéine / Traitement capillaire"}, desc:{en:"Protein from animal hair, hooves, or feathers. Not vegan.",fr:"Protéine issue de poils, sabots ou plumes animaux. Non végane."} },
+      "gelatin":               { status:"safe",    vegan:false, fn:{en:"Thickener",fr:"Épaississant"}, desc:{en:"From animal bones and skin. Not vegan.",fr:"Issu des os et peaux animaux. Non végane."} },
+      "casein":                { status:"safe",    vegan:false, fn:{en:"Film Former",fr:"Agent filmogène"}, desc:{en:"Milk protein. Not vegan.",fr:"Protéine de lait. Non végane."} },
+      "honey":                 { status:"safe",    vegan:false, fn:{en:"Humectant / Antibacterial",fr:"Humectant / Antibactérien"}, desc:{en:"Produced by bees. Not vegan. Natural humectant and antibacterial. Very gentle.",fr:"Produit par les abeilles. Non végane. Humectant naturel et antibactérien. Très doux."} },
+      "royal jelly":           { status:"safe",    vegan:false, fn:{en:"Moisturizing",fr:"Hydratant"}, desc:{en:"Secretion from honeybees. Not vegan. Used in anti-aging formulations.",fr:"Sécrétion d'abeilles. Non végane. Utilisée dans les formulations anti-âge."} },
+      "mink oil":              { status:"safe",    vegan:false, fn:{en:"Emollient",fr:"Émollient"}, desc:{en:"Derived from mink fat. Not vegan or cruelty-free.",fr:"Dérivé de la graisse de vison. Non végane et non sans cruauté."} },
+      "silk":                  { status:"safe",    vegan:false, fn:{en:"Emollient / Conditioner",fr:"Émollient / Conditionneur"}, desc:{en:"From silkworm cocoons. Not vegan. Adds silky feel and shine.",fr:"Issu de cocons de vers à soie. Non végane. Apporte une sensation soyeuse et du brillant."} },
+      "silk amino acids":      { status:"safe",    vegan:false, fn:{en:"Conditioner",fr:"Conditionneur"}, desc:{en:"Proteins from silk. Not vegan. Used for smoothing.",fr:"Protéines de soie. Non végane. Utilisées pour lisser."} },
+      "propolis":              { status:"safe",    vegan:false, fn:{en:"Antibacterial / Healing",fr:"Antibactérien / Cicatrisant"}, desc:{en:"Bee-derived resin. Not vegan. Antibacterial and anti-inflammatory.",fr:"Résine d'abeilles. Non végane. Antibactérien et anti-inflammatoire."} },
+      "snail mucin":           { status:"safe",    vegan:false, fn:{en:"Regenerating",fr:"Régénérant"}, desc:{en:"Promotes skin repair and hydration. Not vegan.",fr:"Favorise la réparation cutanée et l'hydratation. Non végane."} },
+      "collagen hydrolysate":  { status:"safe",    vegan:false, fn:{en:"Moisturizing / Anti-aging",fr:"Hydratant / Anti-âge"}, desc:{en:"Broken-down animal collagen. Not vegan.",fr:"Collagène animal hydrolysé. Non végane."} },
+      "mica":                  { status:"safe",    vegan:true,  fn:{en:"Pigment / Shimmer",fr:"Pigment / Brillance"}, desc:{en:"Mineral-based shimmer and pigment. Generally safe. Look for responsibly sourced mica.",fr:"Pigment et brillance d'origine minérale. Généralement sûr. Préférez le mica issu de sources responsables."} },
+    };
+
+    function normalize(str) {
+      return str.toLowerCase().replace(/\(.*?\)/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+    }
+    function findIngredient(raw) {
+      const key = normalize(raw);
+      if (INGREDIENTS[key]) return { ...INGREDIENTS[key] };
+      for (const [k, v] of Object.entries(INGREDIENTS)) {
+        if (key.includes(k) || k.includes(key)) return { ...v };
+      }
+      return null;
+    }
+    function getSkinNote(rawKey) {
+      if (activeSkin === 'all' || !SKIN_NOTES[activeSkin]) return null;
+      const notes = SKIN_NOTES[activeSkin];
+      const k = normalize(rawKey);
+      for (const w of (notes.warn || [])) { if (k.includes(w) || w.includes(k)) return 'warn'; }
+      for (const g of (notes.good || [])) { if (k.includes(g) || g.includes(k)) return 'good'; }
+      return null;
+    }
+
+    function checkIngredients() {
+      const input = document.getElementById('ingredientInput').value.trim();
+      if (!input) return;
+      const btn = document.getElementById('checkBtn');
+      btn.disabled = true;
+      btn.textContent = currentLang === 'fr' ? 'Analyse en cours...' : 'Analyzing...';
+      const L = currentLang;
+
+      setTimeout(() => {
+        const raw = input.split(/,|\n/).map(s => s.trim()).filter(Boolean);
+        const resultsEl = document.getElementById('checkerResults');
+        const summaryEl = document.getElementById('checkerSummary');
+        resultsEl.innerHTML = '';
+        let counts = { safe:0, caution:0, flag:0, vegan:0, nonVegan:0, unknown:0 };
+        let score = 0;
+
+        raw.forEach((ing, i) => {
+          const data = findIngredient(ing);
+          const row = document.createElement('div');
+          row.style.animationDelay = `${i * 30}ms`;
+
+          if (data) {
+            if (data.status === 'safe') { counts.safe++; score += 100; }
+            else if (data.status === 'caution') { counts.caution++; score += 55; }
+            else if (data.status === 'flag') { counts.flag++; score += 0; }
+            if (data.vegan) counts.vegan++; else counts.nonVegan++;
+
+            row.className = `ingredient-row ${data.status}`;
+            row.dataset.status = data.status;
+
+            const statusClass = { safe:'b-safe', caution:'b-caution', flag:'b-flag' }[data.status];
+            const skinNoteType = getSkinNote(ing);
+            const skinNoteHTML = skinNoteType
+              ? `<div class="skin-note ${skinNoteType}">${skinNoteType === 'warn' ? T.warnNote[L](activeSkin) : T.goodNote[L](activeSkin)}</div>` : '';
+            const skinTag = skinNoteType
+              ? `<span class="ing-badge ${skinNoteType === 'warn' ? 'b-avoid' : 'b-skin'}">${skinNoteType === 'warn' ? T.avoid[L] : T.foryou[L]}</span>` : '';
+
+            row.innerHTML = `
+              <div class="ing-top">
+                <span class="ing-name">${ing}</span>
+                <div class="ing-badges">
+                  <span class="ing-badge ${statusClass}">${T[data.status][L]}</span>
+                  <span class="ing-badge ${data.vegan ? 'b-vegan' : 'b-not-vegan'}">${data.vegan ? T.vegan[L] : T.nonvegan[L]}</span>
+                  ${skinTag}
+                </div>
+              </div>
+              <div class="ing-function">${data.fn[L]}</div>
+              <div class="ing-desc">${data.desc[L]}</div>
+              ${skinNoteHTML}
+            `;
+          } else {
+            counts.unknown++;
+            row.className = 'ingredient-row unknown';
+            row.dataset.status = 'unknown';
+            row.innerHTML = `
+              <div class="ing-top">
+                <span class="ing-name">${ing}</span>
+                <div class="ing-badges"><span class="ing-badge b-unknown">${T.unknown[L]}</span></div>
+              </div>
+              <div class="ing-desc" style="color:var(--text-light)">${T.notfound[L]}</div>
+            `;
+          }
+          resultsEl.appendChild(row);
+        });
+
+        // Score
+        const known = raw.length - counts.unknown;
+        const avg = known > 0 ? Math.round(score / known) : 50;
+        const grade = avg >= 85 ? 'A' : avg >= 70 ? 'B' : avg >= 55 ? 'C' : avg >= 35 ? 'D' : 'F';
+        const gColor = avg >= 85 ? 'var(--safe)' : avg >= 70 ? 'var(--sage)' : avg >= 55 ? 'var(--orange)' : 'var(--red)';
+        const scoreEl = document.getElementById('overallScore');
+        scoreEl.className = 'overall-score visible';
+        document.getElementById('scoreGrade').textContent = grade;
+        document.getElementById('scoreGrade').style.color = gColor;
+        document.getElementById('scoreLabel').textContent = `${T.scorelabel[L]} ${avg}/100`;
+        const bar = document.getElementById('scoreBar');
+        bar.style.background = gColor;
+        setTimeout(() => { bar.style.width = avg + '%'; }, 100);
+
+        // Summary
+        summaryEl.innerHTML = '';
+        summaryEl.className = 'checker-summary visible';
+        if (counts.safe)     summaryEl.innerHTML += `<span class="summary-pill pill-safe">${T.safe[L]} ×${counts.safe}</span>`;
+        if (counts.caution)  summaryEl.innerHTML += `<span class="summary-pill pill-caution">${T.caution[L]} ×${counts.caution}</span>`;
+        if (counts.flag)     summaryEl.innerHTML += `<span class="summary-pill pill-flag">${T.flag[L]} ×${counts.flag}</span>`;
+        if (counts.nonVegan) summaryEl.innerHTML += `<span class="summary-pill pill-non-vegan">${T.nonvegan[L]} ×${counts.nonVegan}</span>`;
+        if (counts.unknown)  summaryEl.innerHTML += `<span class="summary-pill" style="background:rgba(0,0,0,0.05);color:var(--text-light)">${T.unknown[L]} ×${counts.unknown}</span>`;
+
+        document.getElementById('resultsFilter').className = 'results-filter visible';
+        btn.disabled = false;
+        btn.textContent = L === 'fr' ? '🔬 Analyser les ingrédients' : '🔬 Analyze Ingredients';
+      }, 600);
+    }
+
+    // ── Growth Analytics Chart ──────────────────────────────────
+    function initCharts() {
+      // Bar chart - new members last 7 days
+      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const daysFr = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+      const vals = [38, 52, 44, 67, 91, 83, 59];
+      const max = Math.max(...vals);
+      const chart = document.getElementById('memberChart');
+      const labels = document.getElementById('memberLabels');
+      if (!chart) return;
+      chart.innerHTML = '';
+      labels.innerHTML = '';
+      vals.forEach((v, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'bar-wrap';
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = '0%';
+        bar.style.background = i === 4 ? 'var(--sage)' : 'rgba(28,43,30,0.12)';
+        bar.title = v + ' members';
+        bar.style.borderRadius = '2px 2px 0 0';
+        wrap.appendChild(bar);
+        chart.appendChild(wrap);
+        const lbl = document.createElement('div');
+        lbl.className = 'bar-label';
+        lbl.style.flex = '1';
+        lbl.style.textAlign = 'center';
+        lbl.textContent = currentLang === 'fr' ? daysFr[i] : days[i];
+        labels.appendChild(lbl);
+        setTimeout(() => { bar.style.height = Math.round((v / max) * 100) + '%'; bar.style.transition = 'height 0.8s ease'; }, 200 + i * 60);
+      });
+
+      // Category bars
+      const cats = [
+        { en: 'Skincare', fr: 'Soins', pct: 82, color: 'var(--sage)' },
+        { en: 'Nails', fr: 'Ongles', pct: 71, color: 'var(--gold)' },
+        { en: 'Makeup', fr: 'Maquillage', pct: 65, color: '#7A9B6E' },
+        { en: 'Wellness', fr: 'Bien-être', pct: 54, color: 'var(--green)' },
+        { en: 'Education', fr: 'Formation', pct: 43, color: '#C9A96E' },
+      ];
+      const catEl = document.getElementById('categoryBars');
+      if (!catEl) return;
+      catEl.innerHTML = '';
+      cats.forEach((c, i) => {
+        const row = document.createElement('div');
+        row.className = 'cat-row';
+        row.innerHTML = `
+          <div class="cat-name">${currentLang === 'fr' ? c.fr : c.en}</div>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:0%;background:${c.color}"></div></div>
+          <div class="cat-pct">${c.pct}%</div>
+        `;
+        catEl.appendChild(row);
+        setTimeout(() => {
+          row.querySelector('.cat-bar').style.width = c.pct + '%';
+          row.querySelector('.cat-bar').style.transition = 'width 1s ease';
+        }, 300 + i * 80);
+      });
+    }
+
+    // Init on load + re-init on lang change
+    window.addEventListener('load', () => setTimeout(initCharts, 400));
+    const _origSetLang = setLang;
+    // Extend setLang to also re-init charts
+    const __setLang = setLang;
+    window.setLang = function(lang, btn) {
+      __setLang(lang, btn);
+      setTimeout(initCharts, 100);
+    };
+
+    // ── Marketing AI ────────────────────────────────────────────
+    let activeTab = 'caption';
+    let activeTone = 'Luxe';
+
+    function setAiTab(tab, btn) {
+      activeTab = tab;
+      document.querySelectorAll('.ai-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const prompts = {
+        caption: { en: 'e.g. New vegan collagen serum for dry skin, launching this spring...', fr: 'ex. Nouveau sérum collagène végan pour peau sèche, lancement ce printemps...' },
+        campaign: { en: 'e.g. Spring sale campaign for nail supplies, 20% off, targeting pros...', fr: 'ex. Campagne de vente printemps pour fournitures ongles, 20% de réduction, ciblant les pros...' },
+        email: { en: 'e.g. Welcome email for new wholesale partners joining our lab...', fr: 'ex. Courriel de bienvenue pour nouveaux partenaires grossistes de notre laboratoire...' },
+        bio: { en: 'e.g. Certified nail tech, 6 years experience, specializing in gel extensions...', fr: 'ex. Technicienne certifiée, 6 ans d\'expérience, spécialisée en extensions gel...' },
+      };
+      const ta = document.getElementById('aiPrompt');
+      const p = prompts[tab][currentLang] || prompts[tab]['en'];
+      ta.placeholder = p;
+    }
+
+    function setTone(btn) {
+      document.querySelectorAll('.tone-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTone = btn.textContent.replace(/[^\w\s]/g,'').trim();
+    }
+
+    const AI_OUTPUTS = {
+      caption: {
+        en: {
+          luxe: `Your skin deserves more than hydration — it deserves transformation.\n\nIntroducing our new Vegan Collagen Serum. Formulated for dry skin that craves depth. No fillers, no compromise. Pure botanical intelligence.\n\n✦ Spring is your skin's season.\n\n#GardinBeauty #VeganSkincare #CollagenSerum #CleanBeauty #SpringSkin`,
+          natural: `Spring is here — and your skin is ready to bloom 🌿\n\nOur new Vegan Collagen Serum is made for dry skin that needs real nourishment. Plant-based. Cruelty-free. Honest.\n\nDrop a 🌱 if you're going clean this spring.\n\n#VeganSkincare #GardinBeauty #CleanBeauty`,
+          bold: `DRY SKIN ERA IS OVER 🔥\n\nWe formulated something that actually works. Vegan Collagen Serum — botanical power in every drop. No excuses for dull skin this spring.\n\nLaunching now. Are you ready?\n\n#GardinBeauty #SkincareThatWorks #VeganCollagen`,
+        },
+        fr: {
+          luxe: `Votre peau mérite plus que de l'hydratation — elle mérite une transformation.\n\nNouveau Sérum Collagène Végan. Formulé pour les peaux sèches qui exigent de la profondeur. Sans compromis.\n\n✦ Le printemps est la saison de votre peau.\n\n#GardinBeauté #SoinsVégan #SérumCollagène`,
+          natural: `Le printemps arrive — et votre peau est prête à s'épanouir 🌿\n\nNotre Sérum Collagène Végan est fait pour les peaux sèches qui ont besoin d'un vrai soin. Végétal. Sans cruauté. Honnête.\n\n#SoinsVégan #GardinBeauté #BeautéPropre`,
+          bold: `L'ÈRE DE LA PEAU SÈCHE EST TERMINÉE 🔥\n\nOn a formulé quelque chose qui marche vraiment. Sérum Collagène Végan — la puissance botanique dans chaque goutte.\n\nLancement maintenant. Vous êtes prêts?\n\n#GardinBeauté #SoinsQuiMarchent`,
+        }
+      },
+      campaign: {
+        en: { luxe: `Campaign: Spring Wholesale Launch\n\nHeadline: "Elevate your salon this spring."\nOffer: 20% off all nail supplies — for verified Gardin professionals\nDuration: April 1–30, 2026\n\nEmail subject: Your spring order is waiting\nCTA: Shop the Pro Collection →\n\nTarget: Nail techs, estheticians, salons with Elite or Pro tier memberships.` },
+        fr: { luxe: `Campagne : Lancement gros printemps\n\nTitre : "Élevez votre salon ce printemps."\nOffre : 20% sur toutes les fournitures ongles — pour les pros Gardin vérifiés\nDurée : 1–30 avril 2026\n\nObjet courriel : Votre commande printemps vous attend\nAppel à l'action : Magasiner la collection Pro →` }
+      },
+      email: {
+        en: { luxe: `Subject: Welcome to the family — your wholesale journey starts now\n\nHi [Name],\n\nWe're thrilled to welcome you as a Gardin wholesale partner.\n\nYour dedicated account gives you access to lab-direct pricing, private label options, and a community of beauty businesses across Canada.\n\nYour first order? We'll make it count.\n\n— The Gardin Team` },
+        fr: { luxe: `Objet : Bienvenue dans la famille — votre parcours grossiste commence maintenant\n\nBonjour [Prénom],\n\nNous sommes ravis de vous accueillir comme partenaire grossiste Gardin.\n\nVotre compte dédié vous donne accès aux prix directs labo, aux options marque privée et à une communauté de professionnels de la beauté partout au Canada.\n\n— L'équipe Gardin` }
+      },
+      bio: {
+        en: { luxe: `Certified Nail Technician | 6 Years Experience\n\nSpecializing in gel extensions, nail art, and natural nail care. Based in Montréal — available for in-studio and home visits.\n\nPassionate about clean, cruelty-free products. Every set is a work of art.\n\n📍 Montréal | 💅 Book via Gardin` },
+        fr: { luxe: `Technicienne en ongles certifiée | 6 ans d'expérience\n\nSpécialisée en extensions gel, nail art et soin des ongles naturels. Basée à Montréal — disponible en studio et à domicile.\n\nPassionnée par les produits propres et sans cruauté. Chaque pose est une œuvre d'art.\n\n📍 Montréal | 💅 Réserver via Gardin` }
+      }
+    };
+
+    function generateContent() {
+      const prompt = document.getElementById('aiPrompt').value.trim();
+      const outputEl = document.getElementById('aiOutputText');
+      const actionsEl = document.getElementById('aiOutputActions');
+      const btn = document.querySelector('.ai-generate-btn');
+
+      btn.textContent = currentLang === 'fr' ? '✦ Génération en cours...' : '✦ Generating...';
+      btn.disabled = true;
+      outputEl.style.color = 'var(--text-light)';
+      outputEl.style.fontStyle = 'normal';
+      outputEl.innerHTML = '<span class="ai-typing"></span>';
+      actionsEl.style.display = 'none';
+
+      const toneKey = activeTone.toLowerCase().replace(/\s+/g,'').replace('natural','natural').replace('bold','bold').replace('friendly','natural').replace('professional','luxe');
+      const tab = activeTab;
+      const L = currentLang;
+
+      setTimeout(() => {
+        const tabOutputs = AI_OUTPUTS[tab];
+        let text = '';
+        if (tabOutputs) {
+          const langOutputs = tabOutputs[L] || tabOutputs['en'];
+          text = langOutputs[toneKey] || langOutputs['luxe'] || Object.values(langOutputs)[0];
+        }
+        if (!text) text = currentLang === 'fr'
+          ? `✦ Votre contenu Gardin généré par IA apparaîtra ici.\n\nDécrivez votre produit, service ou objectif pour commencer.`
+          : `✦ Your Gardin AI-generated content will appear here.\n\nDescribe your product, service or goal to get started.`;
+
+        outputEl.style.color = 'var(--text-dark)';
+        outputEl.style.fontStyle = 'normal';
+        let i = 0;
+        outputEl.textContent = '';
+        const typeInterval = setInterval(() => {
+          outputEl.textContent += text[i];
+          i++;
+          if (i >= text.length) {
+            clearInterval(typeInterval);
+            actionsEl.style.display = 'flex';
+            btn.textContent = currentLang === 'fr' ? '✦ Générer avec Ora Intelligence' : '✦ Generate with Ora Intelligence';
+            btn.disabled = false;
+          }
+        }, 12);
+      }, 900);
+    }
+  </script>
+
+<!-- ══════════════════════════════════
+     COMMUNITY MODAL
+══════════════════════════════════ -->
+<div class="community-modal-overlay" id="community-modal" onclick="if(event.target===this)closeCommunityModal()">
+  <div class="community-modal">
+    <div class="community-modal-header">
+      <h3>🌿 Gardin Community</h3>
+      <button class="modal-close" onclick="closeCommunityModal()">✕</button>
+    </div>
+    <div class="community-feed">
+      <!-- Composer -->
+      <div class="feed-composer">
+        <textarea id="feed-compose-text" placeholder="Share a technique, ask a question, post an article..."></textarea>
+        <div class="feed-composer-actions">
+          <div class="feed-composer-tools">
+            <span title="Add image">🖼️</span>
+            <span title="Add article">📝</span>
+            <span title="Add link">🔗</span>
+          </div>
+          <button class="feed-post-btn" onclick="submitFeedPost()">Post</button>
+        </div>
+      </div>
+      <!-- Feed -->
+      <div id="community-feed-list">
+        <div class="feed-post-item">
+          <div class="feed-post-meta">
+            <div class="feed-avatar">💅</div>
+            <div><div class="feed-author-name">Sophie M.</div><div class="feed-author-role">Nail Tech · Montréal</div></div>
+            <span class="feed-post-time">2h ago</span>
+          </div>
+          <div class="feed-post-body">Meilleure colle pour extension de cils en hiver? J'ai remarqué que la colle tient moins bien quand il fait froid — quelqu'un a des recommandations? 🙏</div>
+          <div class="feed-post-actions">
+            <button class="feed-action-btn" onclick="likePost(this)">❤️ <span>24</span></button>
+            <button class="feed-action-btn">💬 11 comments</button>
+            <button class="feed-action-btn">↗ Share</button>
+          </div>
+        </div>
+        <div class="feed-post-item">
+          <div class="feed-post-meta">
+            <div class="feed-avatar">💄</div>
+            <div><div class="feed-author-name">Aisha K.</div><div class="feed-author-role">MUA · Toronto</div></div>
+            <span class="feed-post-time">5h ago</span>
+          </div>
+          <div class="feed-post-image">✨</div>
+          <div class="feed-post-body">Found the best skincare supplier for editorial work — just partnered with a Quebec lab. The quality is unreal and fully vegan. Highly recommend reaching out to them through Gardin 🌿</div>
+          <div class="feed-post-actions">
+            <button class="feed-action-btn" onclick="likePost(this)">❤️ <span>47</span></button>
+            <button class="feed-action-btn">💬 18 comments</button>
+            <button class="feed-action-btn">↗ Share</button>
+          </div>
+        </div>
+        <div class="feed-post-item">
+          <div class="feed-post-meta">
+            <div class="feed-avatar">🔬</div>
+            <div><div class="feed-author-name">DermaCo Labs</div><div class="feed-author-role">Supplier · Vancouver</div></div>
+            <span class="feed-post-time">1d ago</span>
+          </div>
+          <div class="feed-post-body">📊 Peptide serums trend — how are pros using them? We're seeing huge demand for peptide-based formulas across salons and clinics. What are beauty pros actually saying about the results? Drop your experience below 👇</div>
+          <div class="feed-post-actions">
+            <button class="feed-action-btn" onclick="likePost(this)">❤️ <span>31</span></button>
+            <button class="feed-action-btn">💬 22 comments</button>
+            <button class="feed-action-btn">↗ Share</button>
+          </div>
+        </div>
+        <div class="feed-post-item">
+          <div class="feed-post-meta">
+            <div class="feed-avatar">✂️</div>
+            <div><div class="feed-author-name">Marcus T.</div><div class="feed-author-role">Barber · Calgary</div></div>
+            <span class="feed-post-time">2d ago</span>
+          </div>
+          <div class="feed-post-body">Just listed my barbering services on Gardin — already got 3 new clients this week. The platform is exactly what the industry needed. Bilingual too which is huge for my Quebec clients 🙌</div>
+          <div class="feed-post-actions">
+            <button class="feed-action-btn" onclick="likePost(this)">❤️ <span>89</span></button>
+            <button class="feed-action-btn">💬 34 comments</button>
+            <button class="feed-action-btn">↗ Share</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     MARKET PANELS
+══════════════════════════════════ -->
+
+<!-- Individual Marketplace -->
+<div class="market-panel" id="panel-individual-marketplace">
+  <div class="market-panel-header">
+    <h2>💅 Individual Marketplace</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Book Beauty Professionals</p>
+    <p class="panel-section-sub">Find and book certified beauty professionals near you — nail techs, estheticians, massage therapists, hairdressers, barbers, hair braiders and more.</p>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">💅</div><h4>Nail Technicians</h4><p>Gel, acrylic, nail art specialists. Home visits available.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">✨</div><h4>Aesthetic Technicians</h4><p>Facials, microdermabrasion, chemical peels, lash extensions.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🧘</div><h4>Massage Therapists</h4><p>RMTs and wellness practitioners. In-studio or mobile.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">✂️</div><h4>Hairdressers</h4><p>Cuts, colour, treatments. Salon and freelance stylists.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🪒</div><h4>Barbers</h4><p>Fades, lineups, beard grooming specialists.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🌺</div><h4>Hair Braiders</h4><p>Knotless braids, cornrows, loc specialists, protective styles.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💄</div><h4>Makeup Artists</h4><p>Editorial, bridal, special effects, and everyday glam.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🔬</div><h4>Other Professionals</h4><p>Permanent makeup, brow technicians, spray tan specialists & more.</p><span class="panel-card-btn">Browse →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">Join to Book Services</a>
+    </div>
+  </div>
+</div>
+
+<!-- Self-Employed -->
+<div class="market-panel" id="panel-self-employed">
+  <div class="market-panel-header">
+    <h2>🧑‍💼 Self-Employed Professionals</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Sell Your Services on Gardin</p>
+    <p class="panel-section-sub">Create your professional profile, list your services, set your availability, and start getting clients. No commission on bookings. Your business, your rules.</p>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">🗂️</div><h4>Create Your Profile</h4><p>Build a professional portfolio with photos, certifications, and reviews.</p><span class="panel-card-btn">Get Started →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">📅</div><h4>Manage Bookings</h4><p>Set your schedule, accept bookings, and manage your calendar in one place.</p><span class="panel-card-btn">Learn More →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💳</div><h4>Get Paid Directly</h4><p>Secure payments processed through the platform. Fast, reliable payouts.</p><span class="panel-card-btn">Learn More →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">📣</div><h4>Grow Your Clientele</h4><p>Access Gardin's network of beauty consumers actively looking for professionals like you.</p><span class="panel-card-btn">Join Free →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">List Your Services — Free</a>
+    </div>
+  </div>
+</div>
+
+<!-- Wholesale -->
+<div class="market-panel" id="panel-wholesale">
+  <div class="market-panel-header">
+    <h2>🏭 Wholesale</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Wholesale for Beauty Businesses</p>
+    <p class="panel-section-sub">Source professional-grade products at wholesale prices. Skincare, haircare, nail supplies, equipment and more — direct from labs and distributors across Canada.</p>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">🧴</div><h4>Skincare Wholesale</h4><p>Vegan skincare collections. MOQ from 50 units. Lab-direct pricing.</p><span class="panel-card-btn">View Suppliers →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💇</div><h4>Haircare Wholesale</h4><p>Shampoos, conditioners, treatments. Salon-exclusive formulas.</p><span class="panel-card-btn">View Suppliers →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💅</div><h4>Nail Supplies</h4><p>Gels, acrylics, nail art kits and tools. Bulk pricing available.</p><span class="panel-card-btn">View Suppliers →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🛠️</div><h4>Equipment & Tools</h4><p>Professional salon and spa equipment. Financing options available.</p><span class="panel-card-btn">View Suppliers →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">Access Wholesale Pricing</a>
+    </div>
+  </div>
+</div>
+
+<!-- Private Label -->
+<div class="market-panel" id="panel-privatelabel">
+  <div class="market-panel-header">
+    <h2>🧪 Private Label Formulation</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Build Your Own Beauty Brand</p>
+    <p class="panel-section-sub">Connect with GMP-certified Canadian labs offering private label formulation for skincare, haircare, and body care. From concept to shelf-ready product.</p>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">🔬</div><h4>Skincare Formulation</h4><p>Custom serums, moisturizers, cleansers. Vegan & cruelty-free options. MOQ from 200 units.</p><span class="panel-card-btn">Get Quote →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💧</div><h4>Haircare Formulation</h4><p>Shampoos, conditioners, scalp treatments. Custom fragrance & formula.</p><span class="panel-card-btn">Get Quote →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🛁</div><h4>Body Care</h4><p>Body butters, scrubs, lotions, and bath products. White-label ready.</p><span class="panel-card-btn">Get Quote →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">📦</div><h4>Packaging & Branding</h4><p>Full-service packaging sourcing and label design through our partner network.</p><span class="panel-card-btn">Learn More →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">Connect With a Lab</a>
+    </div>
+  </div>
+</div>
+
+<!-- B2B Marketplace -->
+<div class="market-panel" id="panel-b2b">
+  <div class="market-panel-header">
+    <h2>🤝 B2B Marketplace</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Business-to-Business Transactions</p>
+    <p class="panel-section-sub">The professional layer of Gardin. Connect salons, spas, clinics, brands and distributors for wholesale deals, collaborations, and supply chain partnerships.</p>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">🏪</div><h4>Salon & Spa Sourcing</h4><p>Salons and spas find vetted suppliers for all their professional needs.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🤝</div><h4>Brand Collaborations</h4><p>Beauty brands connecting for co-development, cross-promotion, and distribution.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🚚</div><h4>Distribution Deals</h4><p>Manufacturers seeking regional distributors and resellers across Canada.</p><span class="panel-card-btn">Browse →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">📋</div><h4>Contracts & RFQs</h4><p>Post a Request for Quote and receive proposals from verified beauty suppliers.</p><span class="panel-card-btn">Post RFQ →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">Join as a Business</a>
+    </div>
+  </div>
+</div>
+
+<!-- All Suppliers -->
+<div class="market-panel" id="panel-suppliers">
+  <div class="market-panel-header">
+    <h2>📦 All Suppliers</h2>
+    <button class="panel-back" onclick="closeAllPanels()">← Back</button>
+  </div>
+  <div class="market-panel-body">
+    <p class="panel-section-title">Verified Supplier Directory</p>
+    <p class="panel-section-sub">All suppliers registered on the Gardin platform. Verified, rated, and reviewed by the community. Filter by category, location, and certification.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;margin-top:24px;">
+      <button style="padding:8px 18px;border:1px solid #1f3d2b;border-radius:3px;background:#1f3d2b;color:#fff;font-size:12px;cursor:pointer;">All</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Skincare</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Haircare</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Nail Supplies</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Equipment</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Packaging</button>
+      <button style="padding:8px 18px;border:1px solid #ddd;border-radius:3px;background:#fff;font-size:12px;cursor:pointer;">Labs</button>
+    </div>
+    <div class="panel-grid">
+      <div class="panel-card"><div class="panel-card-icon">🧴</div><h4>DermaCo Labs</h4><p>GMP-certified skincare formulator. Vancouver, BC. Vegan & cruelty-free. MOQ 200.</p><span class="panel-card-btn">View Profile →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💅</div><h4>NailPro Supply Co.</h4><p>Nail supplies & equipment distributor. Ontario. Ships nationwide.</p><span class="panel-card-btn">View Profile →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🌿</div><h4>BotanicaLab Canada</h4><p>Natural & organic ingredient supplier. Quebec. Raw botanical extracts.</p><span class="panel-card-btn">View Profile →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">📦</div><h4>PurePackage Inc.</h4><p>Sustainable beauty packaging. Eco-certified. Custom printing. MOQ 500.</p><span class="panel-card-btn">View Profile →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">💇</div><h4>SalonPro Wholesale</h4><p>Haircare products & salon tools. Professional-grade. Alberta & BC.</p><span class="panel-card-btn">View Profile →</span></div>
+      <div class="panel-card"><div class="panel-card-icon">🔬</div><h4>FormulaFirst Labs</h4><p>Private label formulation. Skincare & haircare. Toronto. Fast turnaround.</p><span class="panel-card-btn">View Profile →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#join" onclick="closeAllPanels()" class="btn-primary">Register as a Supplier</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Panel & Modal Controls ──
+function openPanel(id) {
+  closeAllPanels();
+  const panel = document.getElementById(id);
+  if (panel) { panel.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function closeAllPanels() {
+  document.querySelectorAll('.market-panel').forEach(p => p.classList.remove('open'));
+  document.body.style.overflow = '';
+}
+function openCommunityModal() {
+  document.getElementById('community-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCommunityModal() {
+  document.getElementById('community-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function likePost(btn) {
+  const countEl = btn.querySelector('span');
+  if (countEl) { countEl.textContent = parseInt(countEl.textContent) + 1; }
+}
+function submitFeedPost() {
+  const text = document.getElementById('feed-compose-text').value.trim();
+  if (!text) return;
+  const feed = document.getElementById('community-feed-list');
+  const newPost = document.createElement('div');
+  newPost.className = 'feed-post-item';
+  newPost.innerHTML = \`
+    <div class="feed-post-meta">
+      <div class="feed-avatar">👤</div>
+      <div><div class="feed-author-name">You</div><div class="feed-author-role">Member</div></div>
+      <span class="feed-post-time">Just now</span>
+    </div>
+    <div class="feed-post-body">\${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    <div class="feed-post-actions">
+      <button class="feed-action-btn" onclick="likePost(this)">❤️ <span>0</span></button>
+      <button class="feed-action-btn">💬 0 comments</button>
+      <button class="feed-action-btn">↗ Share</button>
+    </div>
+  \`;
+  feed.insertBefore(newPost, feed.firstChild);
+  document.getElementById('feed-compose-text').value = '';
+}
+// ── Activate Join Waitlist / Business buttons ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('[data-en="Join the Waitlist"], [data-en="Join the List"]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector('#join').scrollIntoView({behavior:'smooth'});
+    });
+  });
+  document.querySelectorAll('[data-en="Business"]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openPanel('panel-b2b');
+    });
+  });
+});
+</script>
+
+</body>
+</html>
